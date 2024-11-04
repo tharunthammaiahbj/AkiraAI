@@ -20,3 +20,9 @@ tqdm>=4.66.4                       # Progress bar for loops
 googlesearch-python>=1.2.5         # Google search automation
 semchunk>=1.0.1                    # Semantic chunking for text data
 simpleeval>=0.9.13                 # Safe evaluation of simple expressions
+
+# framework for using LLMs in an application 
+langchain>=0.2.14                  # core package of LangChain will cover basic LLM integration and workflow capabilities.
+langchain-mistralai>=0.1.12        # This is for integrating Mistral AI models, which are free and open-source.
+faiss-cpu>=1.8.0                   # For efficient similarity search, an open-source package by Facebook AI.
+langchain_community>=0.2.9         # Useful for accessing community-contributed utilities and tools that are often open-source and flexible.
