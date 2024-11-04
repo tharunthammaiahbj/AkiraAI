@@ -12,4 +12,7 @@ RUN pip install --no-cache-dir --upgrade pip
 # Install the packages from requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Install Playwright browser binaries
+RUN playwright install 
+
 # The container will be ready for development once dependencies are installed

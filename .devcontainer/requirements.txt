@@ -1,2 +1,22 @@
-beautifulsoup4>=4.12.3
-pandas>=2.2.2
+# Core Web Scraping Packages
+beautifulsoup4>=4.12.3             # HTML and XML parsing         
+requests                           # HTTP requests for data fetching
+playwright>=1.43.0                 # Browser automation
+undetected-playwright>=0.3.0       # Stealth mode for Playwright (bypass anti-bot)
+
+# Proxy and Networking
+free-proxy>=1.1.1                  # Free proxy access
+async_timeout>=4.0.3               # Timeout handling for async scraping
+
+# HTML Processing
+html2text>=2024.2.26               # Convert HTML to text
+minify-html>=0.15.0                # Minify HTML content
+
+# Data Handling and Parsing
+pandas>=2.2.2                      # Data manipulation and analysis
+tqdm>=4.66.4                       # Progress bar for loops
+
+# Additional Scraping Tools
+googlesearch-python>=1.2.5         # Google search automation
+semchunk>=1.0.1                    # Semantic chunking for text data
+simpleeval>=0.9.13                 # Safe evaluation of simple expressions
