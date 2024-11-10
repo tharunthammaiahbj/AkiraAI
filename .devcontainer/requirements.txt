@@ -26,3 +26,6 @@ langchain>=0.2.14                  # core package of LangChain will cover basic 
 langchain-mistralai>=0.1.12        # This is for integrating Mistral AI models, which are free and open-source.
 faiss-cpu>=1.8.0                   # For efficient similarity search, an open-source package by Facebook AI.
 langchain_community>=0.2.9         # Useful for accessing community-contributed utilities and tools that are often open-source and flexible.
+langchain-google-genai>=1.0.7      # Google Generative AI model Integration
+langchain-openai>=0.1.22           # OpenAI LLMs generative models integration and usages
+langchain-aws>=0.1.3               # aws for scaling your application upon demand(12months free for beginners)
