@@ -1,8 +1,7 @@
 # Core Web Scraping Packages
 beautifulsoup4>=4.12.3             # HTML and XML parsing         
 requests                           # HTTP requests for data fetching
-playwright>=1.43.0                 # Browser automation
-undetected-playwright>=0.3.0       # Stealth mode for Playwright (bypass anti-bot)
+playwright                         # Browser automation
 
 # Proxy and Networking
 free-proxy>=1.1.1                  # Free proxy access
