@@ -7,10 +7,10 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Upgrade pip to the latest version
-RUN pip install --no-cache-dir --upgrade pip
+RUN pip3 install --no-cache-dir --upgrade pip
 
 # Install the packages from requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Install Playwright browser binaries
 RUN playwright install 
