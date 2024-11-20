@@ -32,6 +32,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libatspi2.0-0 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/*
+    
 # Ensure the necessary directories are created if they don't exist
 RUN mkdir -p /home/vscode/.cache/ms-playwright \
     && PLAYWRIGHT_BROWSERS_PATH=/home/vscode/.cache/ms-playwright playwright install chromium --force \
