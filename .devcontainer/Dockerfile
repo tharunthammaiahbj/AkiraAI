@@ -36,5 +36,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Ensure the necessary directories are created if they don't exist
 RUN mkdir -p /home/vscode/.cache/ms-playwright \
     && PLAYWRIGHT_BROWSERS_PATH=/home/vscode/.cache/ms-playwright playwright install chromium --force \
-    && rm -rf /var/lib/apt/lists/* /tmp/*
-    
+    && rm -rf /var/lib/apt/lists/* /tmp/* 
+
+
+ENV PYTHONPATH=/workspace/AkiraAI

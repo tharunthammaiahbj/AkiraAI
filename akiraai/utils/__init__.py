@@ -1,6 +1,4 @@
-#For Proxy Rotation:
-
-from utils import (
+from .proxy_rotation import (
     Proxy,
     search_proxy_servers,
     _parse_proxy,
@@ -8,4 +6,3 @@ from utils import (
     is_ipv4_address,
     parse_or_search_proxy,
 )
-
