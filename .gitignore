@@ -13,3 +13,7 @@
 # Cache or temporary files
 cache/
 
+# Ignore the config folder containing sensitive credentials
+/config/
+
+
