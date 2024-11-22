@@ -1,0 +1,15 @@
+# .env file for environment variables (don't want to commit API keys)
+.env
+
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+
+#VSCode or IDE specific settings (to avoid sharing personal workspace configurations):
+.vscode/
+
+# Cache or temporary files
+cache/
+
