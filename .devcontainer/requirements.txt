@@ -33,3 +33,5 @@ langchain_community>=0.2.9         # Useful for accessing community-contributed 
 langchain-google-genai>=1.0.7      # Google Generative AI model Integration
 langchain-openai>=0.1.22           # OpenAI LLMs generative models integration and usages
 langchain-aws>=0.1.3               # aws for scaling your application upon demand(12months free for beginners)
+google-cloud>=0.34.0               # to access to all the google cloud services (vertex AI and more)
+huggingface-hub>=0.26.2            # to use models in hugging_face through inference API
