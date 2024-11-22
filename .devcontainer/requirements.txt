@@ -37,4 +37,3 @@ huggingface-hub>=0.26.2            # to use models in hugging_face through infer
 google-cloud                       # to access to all the google cloud services (vertex AI and more)
 google-cloud-aiplatform
 vertexai                           # to use vertex AI models for different purposes
-    
