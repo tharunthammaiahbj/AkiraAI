@@ -4,7 +4,7 @@ This module defines the base node class for the ScrapeGraphAI application.
 import re
 from abc import ABC, abstractmethod
 from typing import List, Optional
-from ..utils import get_logger
+from ..utils.logger import get_logger
 
 class BaseNode(ABC):
     """

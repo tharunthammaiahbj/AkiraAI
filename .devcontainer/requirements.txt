@@ -21,6 +21,8 @@ tqdm>=4.66.4                       # Progress bar for loops
 googlesearch-python>=1.2.5         # Google search automation
 semchunk>=1.0.1                    # Semantic chunking for text data
 simpleeval>=0.9.13                 # Safe evaluation of simple expressions
+jsonschema>=4.23.0                 # library in Python is used for validating JSON data against a defined schema
+burr>=0.33.2                       # Burr makes it easy to develop applications that make decisions (chatbots, agents, simulations, etc...) from simple python building blocks.
 
 # framework for using LLMs in an application 
 langchain>=0.2.14                  # core package of LangChain will cover basic LLM integration and workflow capabilities.
