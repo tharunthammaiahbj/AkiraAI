@@ -11,7 +11,7 @@ from langchain_core.documents import Document
 from ..utils.clean_up_html import cleanup_html
 from ..web_doc_loader import ChromiumLoader
 from ..utils.convert_to_md import convert_to_md
-from ..utils.logger import get_logger
+from ..utils.logging import get_logger
 from .base_node import BaseNode
 
 class FetchNode(BaseNode):

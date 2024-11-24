@@ -13,7 +13,7 @@ from ..models import (
     OneApi,
     DeepSeek
 )
-from ..utils.logger import set_verbosity_warning, set_verbosity_info
+from ..utils.logging import set_verbosity_warning, set_verbosity_info
 
 class AbstractGraph(ABC):
     """

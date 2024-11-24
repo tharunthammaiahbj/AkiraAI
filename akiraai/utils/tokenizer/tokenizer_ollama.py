@@ -2,7 +2,7 @@
 Tokenization utilities for Ollama models
 """
 from langchain_core.language_models.chat_models import BaseChatModel
-from ..logger import get_logger
+from ..logging import get_logger
 
 def num_tokens_ollama(text: str, llm_model:BaseChatModel) -> int:
     """
