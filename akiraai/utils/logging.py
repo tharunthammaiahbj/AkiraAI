@@ -7,6 +7,22 @@ handlers bound to the root logger.
 Source code inspired by: https://gist.github.com/DiTo97/9a0377f24236b66134eb96da1ec1693f
 """
 
+
+"""
+To create your own named logger , you will have to configure, logging level, 
+handler level and the type of handler, here is an example of a named logger 
+independent of parent or root logger:
+
+logger = get_logger("custom_logger")
+
+# Configure the named logger
+logger.setLevel(logging.DEBUG)
+handler = logging.StreamHandler()  # Add a handler explicitly
+handler.setFormatter(logging.Formatter("[%(levelname)s] %(message)s"))
+logger.addHandler(handler)
+
+"""
+
 import logging
 import os
 import sys
