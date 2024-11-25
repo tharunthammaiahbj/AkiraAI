@@ -1,19 +1,16 @@
-from akiraai.utils.dynamic_imports import dynamic_import
+from akiraai.web_doc_loader.chromium_loader import ChromiumLoader
+import asyncio
 
+async def scrape_single_page():
+    url = "https://www.amazon.in/"
 
-modname = "math"
+    scraper = ChromiumLoader(
+        urls=[url] , headless=True, requires_js_support=True
+    )
+    content = await scraper.ascrape_undetected_chromedriver(url)
 
-try:
-    # Dynamically import the module
-    dynamic_import(modname)
-    print(f"Module '{modname}' was imported successfully!")
+    print(content)
 
-    # Access and use a function from the dynamically imported module
-    import math  # `math` is now in sys.modules
-    result = math.sqrt(16)  # Call a simple function
-    print(f"Square root of 16 is: {result}")  # Expected: 4.0
-except ImportError as e:
-    print(f"Error importing module '{modname}': {e}")
-
-
+if __name__ == "__main__":
+    asyncio.run(scrape_single_page())
 

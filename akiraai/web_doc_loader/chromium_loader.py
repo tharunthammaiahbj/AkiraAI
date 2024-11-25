@@ -4,7 +4,9 @@ from langchain_community.document_loaders.base import BaseLoader
 from langchain_core.documents import Document
 import aiohttp
 import async_timeout
-from ..utils import Proxy, dynamic_import, get_logger, parse_or_search_proxy
+from akiraai.utils.dynamic_imports import dynamic_import
+from akiraai.utils.logging import get_logger
+from ..utils import Proxy, parse_or_search_proxy
 import logging
 
 """
