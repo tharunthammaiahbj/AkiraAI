@@ -20,7 +20,7 @@ logger.setLevel(logging.DEBUG)
 handler = logging.StreamHandler()  # Add a handler explicitly
 handler.setFormatter(logging.Formatter("[%(levelname)s] %(message)s"))
 logger.addHandler(handler)
-
+ALL FUNCTIONS ARE FOR ROOT LOGGERS AND NOT NAMED ONES
 """
 
 import logging

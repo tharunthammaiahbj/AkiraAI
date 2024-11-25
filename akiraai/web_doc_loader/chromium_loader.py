@@ -5,8 +5,26 @@ from langchain_core.documents import Document
 import aiohttp
 import async_timeout
 from ..utils import Proxy, dynamic_import, get_logger, parse_or_search_proxy
+import logging
 
-logger = get_logger("web-loader")
+"""
+This is a named custom logger with logging level  and streaming handler with formatter
+"""
+
+logger = get_logger("web-doc-loader")
+
+logger.setLevel(logging.DEBUG)
+handler = logging.StreamHandler()
+handler.setFormatter(logging.Formatter(
+    fmt=
+    (
+        "%(asctime)s [%(levelname)s] [%(name)s] "
+        "[%(filename)s:%(lineno)d] - %(message)s"
+    ),
+    datefmt="%Y-%m-%d %H:%M:%S"))
+logger.addHandler(handler)
+
+
 
 class ChromiumLoader(BaseLoader):
     """Scrapes HTML pages from URLs using a (headless) instance of the

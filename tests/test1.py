@@ -1,46 +1,19 @@
-from akiraai.utils.logging import (
-    get_logger,
-    set_verbosity_info,
-    set_verbosity,
-    set_verbosity_error,
-    set_verbosity_debug,
-    set_verbosity_fatal,
-    set_verbosity_warning,
-    get_verbosity,
-    setDEFAULT_HANDLER,
-    set_handler
-)
-import logging
-
-# Get a named logger
-logger = get_logger("custom_logger")
-
-# Configure the named logger
-logger.setLevel(logging.DEBUG)
-handler = logging.StreamHandler()  # Add a handler explicitly
-handler.setFormatter(logging.Formatter("[%(levelname)s] %(message)s"))
-logger.addHandler(handler)
-
-# Log messages
-logger.debug("This will not be shown (level is INFO).")
-logger.info("Info message from the named logger.")
-logger.warning("Warning message from the named logger.")
-
-logger.error("1: ERROR:this is an error message")
-logger.info("1: INFO: This is an information")
-logger.debug("1: DEBUG: this is a debug message")
+from akiraai.utils.dynamic_imports import dynamic_import
 
 
-logger.error("2: ERROR:this is an error message")
-logger.info("2: INFO: This is an information")
-logger.debug("2: DEBUG: this is a debug message")
+modname = "math"
 
+try:
+    # Dynamically import the module
+    dynamic_import(modname)
+    print(f"Module '{modname}' was imported successfully!")
 
-logger.error("3: ERROR:this is an error message")
-logger.info("3: INFO: This is an information")
-logger.debug("3: DEBUG: this is a debug message")
-
-
+    # Access and use a function from the dynamically imported module
+    import math  # `math` is now in sys.modules
+    result = math.sqrt(16)  # Call a simple function
+    print(f"Square root of 16 is: {result}")  # Expected: 4.0
+except ImportError as e:
+    print(f"Error importing module '{modname}': {e}")
 
 
 
