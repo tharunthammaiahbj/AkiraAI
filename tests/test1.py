@@ -7,7 +7,7 @@ async def scrape_single_page():
     scraper = ChromiumLoader(
         urls=[url] , headless=True, requires_js_support=True
     )
-    content = await scraper.ascrape_undetected_chromedriver(url)
+    content = await scraper.ascrape_with_js_support(url)
 
     print(content)
 
