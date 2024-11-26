@@ -2,12 +2,12 @@ from akiraai.web_doc_loader.chromium_loader import ChromiumLoader
 import asyncio
 
 async def scrape_single_page():
-    url = "https://www.amazon.in/"
+    url = "https://developer.chrome.com/docs/chromedriver/capabilities"
 
     scraper = ChromiumLoader(
         urls=[url] , headless=True, requires_js_support=True
     )
-    content = await scraper.ascrape_with_js_support(url)
+    content = await scraper.ascrape_undetected_chromedriver(url)
 
     print(content)
 

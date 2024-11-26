@@ -102,7 +102,7 @@ class ChromiumLoader(BaseLoader):
         while attempt < self.RETRY_LIMIT:
             try:
                 async with async_timeout.timeout(self.TIMEOUT):
-                    driver = uc.Chrome(headless=self.headless,browser_executable_path="C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe")
+                    driver = uc.Chrome(headless=self.headless,browser_executable_path="/usr/bin/google-chrome")
                     driver.get(url)
                     results = driver.page_source
                     logger.info(f"Successfully scraped {url}")
