@@ -160,6 +160,7 @@ class ChromiumLoader(BaseLoader):
 
     async def ascrape_with_js_support(self, url: str) -> str:
         """
+        REQUIRES ENHANCEMENTS : NOT WORKING FOR E-COM SITES
         Asynchronously scrape the content of a given URL by rendering JavaScript using Playwright.
 
         Args:
