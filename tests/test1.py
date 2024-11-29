@@ -1,16 +1,19 @@
-from akiraai.web_doc_loader.chromium_loader import ChromiumLoader
-import asyncio
+import logging
+from typing import List
+from akiraai.utils.logging import get_logger
+from akiraai.nodes.base_node import BaseNode
 
-async def scrape_single_page():
-    url = "https://developer.chrome.com/docs/chromedriver/capabilities"
 
-    scraper = ChromiumLoader(
-        urls=[url] , headless=True, requires_js_support=True
-    )
-    content = await scraper.ascrape_undetected_chromedriver(url)
+logger = get_logger("node-logger")
+logger.setLevel(logging.DEBUG)
+handler =logging.StreamHandler()
+handler.setFormatter(logging.Formatter(
+    fmt=
+    (
+        "%(asctime)s [%(levelname)s] [%(name)s] "
+        "[%(filename)s:%(lineno)d] - %(message)s"
+    ),
+    datefmt="%Y-%m-%d %H:%M:%S"))
+logger.addHandler(handler)
 
-    print(content)
-
-if __name__ == "__main__":
-    asyncio.run(scrape_single_page())
 

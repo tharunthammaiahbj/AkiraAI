@@ -18,7 +18,13 @@ logger = get_logger("custom_logger")
 # Configure the named logger
 logger.setLevel(logging.DEBUG)
 handler = logging.StreamHandler()  # Add a handler explicitly
-handler.setFormatter(logging.Formatter("[%(levelname)s] %(message)s"))
+handler.setFormatter(logging.Formatter(
+    fmt=
+    (
+        "%(asctime)s [%(levelname)s] [%(name)s] "
+        "[%(filename)s:%(lineno)d] - %(message)s"
+    ),
+    datefmt="%Y-%m-%d %H:%M:%S"))
 logger.addHandler(handler)
 ALL FUNCTIONS ARE FOR ROOT LOGGERS AND NOT NAMED ONES
 """
