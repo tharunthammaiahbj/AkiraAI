@@ -9,7 +9,7 @@ import requests
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
 from ..utils.clean_up_html import cleanup_html
-from ..web_doc_loader import ChromiumLoader
+from ..web_doc_loader import WebContentLoader
 from ..utils.convert_to_md import convert_to_md
 from ..utils.logging import get_logger
 from .base_node import BaseNode
@@ -291,7 +291,7 @@ class FetchNode(BaseNode):
                 document = [Document(page_content=data,
                                     metadata={"source": source})]
             else:
-                loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
+                loader = WebContentLoader([source], headless=self.headless, **loader_kwargs)
                 document = loader.load()
 
             if not document or not document[0].page_content.strip():

@@ -90,7 +90,7 @@ def search_proxy_servers(
 
         return list(positive)
 
-    return search_all(proxybroker, max_shape, search_outside_if_empty)
+    return search_all(proxybroker, max_shape, search_outside_if_empty)  
 
 def _parse_proxy(proxy: ProxySettings) -> ProxySettings:
     """Parses a proxy configuration."""

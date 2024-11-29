@@ -28,7 +28,7 @@ logger.addHandler(handler)
 
 
 
-class ChromiumLoader(BaseLoader):
+class WebContentLoader(BaseLoader):
     """Scrapes HTML pages from URLs using a (headless) instance of the
     Chromium web driver with proxy protection.
 

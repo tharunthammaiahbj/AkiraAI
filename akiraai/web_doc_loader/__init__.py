@@ -1,1 +1,1 @@
-from akiraai.web_doc_loader.chromium_loader import ChromiumLoader
+from akiraai.web_doc_loader.web_content_loader import WebContentLoader
