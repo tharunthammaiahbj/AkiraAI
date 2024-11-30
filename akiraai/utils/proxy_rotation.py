@@ -40,7 +40,7 @@ def search_proxy_servers(
     countryset: Optional[Set[str]] = None,
     secure: bool = False,
     timeout: float = 5.0,
-    max_shape: int = 5,
+    max_shape: int = 6,
     search_outside_if_empty: bool = True,
 ) -> List[str]:
     """Search for proxy servers that match specified criteria."""

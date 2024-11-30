@@ -1,4 +1,5 @@
-from akiraai.utils.proxy_rotation_new import ProxyFetcher,ProxyFilter
+from akiraai.utils.proxy_rotation_new import ProxyFetcher,ProxyFilter,active_proxy_list
+
 
 
 filter : ProxyFilter = {
@@ -13,4 +14,6 @@ filter : ProxyFilter = {
 
 proxyserver = ProxyFetcher(proxy_filter=filter)
 print(f"ProxyList:{proxyserver.validated_proxy_list()}")
+
+
 

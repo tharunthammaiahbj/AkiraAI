@@ -1,19 +1,10 @@
-import logging
-from typing import List
-from akiraai.utils.logging import get_logger
-from akiraai.nodes.base_node import BaseNode
+from akiraai.utils.proxy_rotation import search_proxy_servers
 
+proxy = search_proxy_servers(
+    anonymous=True,
+    countryset=["US"],
+    secure=False,
+       
+)
 
-logger = get_logger("node-logger")
-logger.setLevel(logging.DEBUG)
-handler =logging.StreamHandler()
-handler.setFormatter(logging.Formatter(
-    fmt=
-    (
-        "%(asctime)s [%(levelname)s] [%(name)s] "
-        "[%(filename)s:%(lineno)d] - %(message)s"
-    ),
-    datefmt="%Y-%m-%d %H:%M:%S"))
-logger.addHandler(handler)
-
-
+print(proxy)

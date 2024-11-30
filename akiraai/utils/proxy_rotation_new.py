@@ -7,6 +7,7 @@ from fp.errors import FreeProxyException
 from fp.fp import FreeProxy
 from akiraai.utils.logging import get_logger
 import logging
+from concurrent.futures import ThreadPoolExecutor,as_completed
 
 logger = get_logger("proxy-logger")
 
@@ -27,7 +28,7 @@ class ProxyFilter(TypedDict , total = False):
     anonymous:bool
     secure:bool
     time_out:float
-    country_preference:Set[str]
+    country_preference_set:Set[str]
     outside_search:bool
     proxy_count: Optional[int]
 
@@ -65,38 +66,67 @@ class ProxyFetcher:
 
 
 
-def active_proxy_list(proxybroker:FreeProxy, proxy_count: int, outside_search: bool)->List[str]:
-        
+def active_proxy_list(proxybroker, proxy_count: int, outside_search: bool) -> List[str]:
+    """
+    Fetch a list of active proxies that satisfy the given criteria.
 
-        valid_proxies = set()
-        for _ in range(2):
-            proxy_list = proxybroker.get_proxy_list(outside_search)
-            random.shuffle(proxy_list)
+    Args:
+        proxybroker (FreeProxy): The proxy broker object.
+        proxy_count (int): The number of proxies required.
+        outside_search (bool): Whether to search outside the initial criteria.
 
-            for element in proxy_list:
-                 proxy_url = {proxybroker.schema: f"http://{element}"}
+    Returns:
+        List[str]: A list of validated proxy URLs.
 
-                 proxy_server =proxybroker._FreeProxy__check_if_proxy_is_working(proxy_url)
+    Raises:
+        FreeProxyException: If the required number of proxies cannot be found.
+    """
+    valid_proxies: Set[str] = set()
+    max_threads = 10  # Limit concurrent threads to avoid excessive resource use
 
-                 if proxy_server:
-                      valid_proxies.add(proxy_server)
+    def validate_proxy(proxy_url: dict) -> str:
+        """Validate a single proxy and return it if working."""
+        try:
+            return proxybroker._FreeProxy__check_if_proxy_is_working(proxy_url)
+        except requests.exceptions.RequestException:
+            return None
 
-                 if len(valid_proxies) < proxy_count or not proxy_server:
-                    continue
+    while len(valid_proxies) < proxy_count:
+        # Get a new batch of candidate proxies
+        proxy_list = proxybroker.get_proxy_list(outside_search)
+        random.shuffle(proxy_list)
+
+        # Concurrently validate proxies
+        with ThreadPoolExecutor(max_workers=max_threads) as executor:
+            future_to_proxy = {
+                executor.submit(validate_proxy, {proxybroker.schema: f"http://{proxy}"}): proxy
+                for proxy in proxy_list
+            }
+
+            for future in as_completed(future_to_proxy):
+                try:
+                    result = future.result()
+                    if result:
+                        valid_proxies.add(result)
+
+                    # Early termination if required proxies are validated
+                    if len(valid_proxies) >= proxy_count:
+                        return list(valid_proxies)[:proxy_count]
+                except Exception:
+                    continue  # Ignore any exceptions
+
+        # Broaden search criteria if insufficient proxies are found
+        if len(valid_proxies) < proxy_count and outside_search:
+            proxybroker.country_id = None  # Remove country restrictions
+
+    # Raise an exception if not enough proxies are found
+    if len(valid_proxies) < proxy_count:
+        raise FreeProxyException(f"Only found {len(valid_proxies)} proxies, but {proxy_count} required.")
+
+    return list(valid_proxies)[:proxy_count]
+
             
-            n = len(valid_proxies)
-            if len(valid_proxies)>=proxy_count:
-                 break
-            
-            elif n<proxy_count and outside_search:
-                 proxybroker.country_id=None
 
-            else:
-                 raise FreeProxyException("missing proxy servers for criteria")
-        
-
-        return list(valid_proxies)[:proxy_count]
-            
 
         
         
