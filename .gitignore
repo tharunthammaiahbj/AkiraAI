@@ -16,4 +16,6 @@ cache/
 # Ignore the config folder containing sensitive credentials
 /config/
 
+#Ignore the logs directory
+logs/
 
