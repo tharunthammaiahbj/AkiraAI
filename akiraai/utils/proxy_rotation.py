@@ -33,14 +33,6 @@ class ProxyFilter(TypedDict, total=False):
     proxy_count: Optional[int]
 
 
-class ProxyAuth(TypedDict, total=False):
-
-    server: str
-    bypass: str
-    username: str
-    password: str
-
-
 class ProxyFetcher:
     def __init__(self, proxy_filter: ProxyFilter):
 
