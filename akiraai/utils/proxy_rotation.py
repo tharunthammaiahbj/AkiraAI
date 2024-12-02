@@ -6,21 +6,11 @@ import requests
 from fp.errors import FreeProxyException
 from fp.fp import FreeProxy
 from akiraai.utils.logging import get_logger
-import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-logger = get_logger("proxy-logger")
-
-# Configure the named logger
-logger.setLevel(logging.DEBUG)
-handler = logging.StreamHandler()  # Add a handler explicitly
-handler.setFormatter(logging.Formatter(
-    fmt=(
-        "%(asctime)s [%(levelname)s] [%(name)s] "
-        "[%(filename)s:%(lineno)d] - %(message)s"
-    ),
-    datefmt="%Y-%m-%d %H:%M:%S"))
-logger.addHandler(handler)
+logger = get_logger(
+    name="proxy-logger"
+)
 
 
 class ProxyFilter(TypedDict, total=False):
