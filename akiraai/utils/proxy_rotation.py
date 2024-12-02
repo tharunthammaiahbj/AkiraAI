@@ -1,135 +1,125 @@
 import ipaddress
 import random
-import re   
+import re
 from typing import List, Optional, Set, TypedDict
 import requests
 from fp.errors import FreeProxyException
 from fp.fp import FreeProxy
+from akiraai.utils.logging import get_logger
+import logging
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
-class ProxyBrokerCriteria(TypedDict, total=False):
+logger = get_logger("proxy-logger")
+
+# Configure the named logger
+logger.setLevel(logging.DEBUG)
+handler = logging.StreamHandler()  # Add a handler explicitly
+handler.setFormatter(logging.Formatter(
+    fmt=(
+        "%(asctime)s [%(levelname)s] [%(name)s] "
+        "[%(filename)s:%(lineno)d] - %(message)s"
+    ),
+    datefmt="%Y-%m-%d %H:%M:%S"))
+logger.addHandler(handler)
+
+
+class ProxyFilter(TypedDict, total=False):
+
+    anonymous: bool
+    secure: bool
+    time_out: float
+    country_preference_set: Set[str]
+    outside_search: bool
+    proxy_count: Optional[int]
+
+
+class ProxyAuth(TypedDict, total=False):
+
+    server: str
+    bypass: str
+    username: str
+    password: str
+
+
+class ProxyFetcher:
+    def __init__(self, proxy_filter: ProxyFilter):
+
+        self.proxy_filter = proxy_filter
+
+        self.proxybroker = FreeProxy(
+            anonym=self.proxy_filter.get("anonymous", True),
+            https=self.proxy_filter.get("secure", False),
+            country_id=self.proxy_filter.get("country_preference", None),
+            timeout=self.proxy_filter.get("time_out", 5.0),
+            elite=True,
+        )
+        self.proxy_count = self.proxy_filter.get("proxy_count", 5)
+
+    def validated_proxy_list(self) -> List[str]:
+        return active_auth_proxy_list(
+            proxybroker=self.proxybroker,
+            proxy_count=self.proxy_count,
+            outside_search=self.proxy_filter.get("outside_search", True),
+        )
+
+
+def active_auth_proxy_list(proxybroker, proxy_count: int, outside_search: bool) -> List[str]:
     """
-    Proxy broker criteria for rotating proxies:
-    The ProxyBrokerCriteria class is used to define a flexible and customizable 
-    set of conditions for selecting proxies, especially in the context of proxy 
-    rotation for tasks like web scraping.
-    
+    Fetch a list of active proxies that satisfy the given criteria.
+
+    Args:
+        proxybroker (FreeProxy): The proxy broker object.
+        proxy_count (int): The number of proxies required.
+        outside_search (bool): Whether to search outside the initial criteria.
+
+    Returns:
+        List[str]: A list of validated proxy URLs.
+
+    Raises:
+        FreeProxyException: If the required number of proxies cannot be found.
     """
-    anonymous: bool  # Ensure the proxy is anonymous to prevent detection.
-    countryset: Set[str]  # Allow country-specific proxies.
-    secure: bool  # Whether proxies should support HTTPS.
-    timeout: float  # Set the maximum timeout for proxies.
-    search_outside_if_empty: bool  # Allow broader search if no proxies match.
 
-class ProxySettings(TypedDict, total=False):
-    """
-    Configuration for each proxy, including authentication details.
-    """
-    server: str  # The proxy server address.
-    bypass: str  # Addresses that should bypass the proxy (e.g., APIs).
-    username: str  # Username for proxy authentication.
-    password: str  # Password for proxy authentication.
+    valid_proxies: Set[str] = set()
+    max_threads = 10  # Limit concurrent threads to avoid excessive resource use
 
-class Proxy(ProxySettings):
-    """
-    Proxy server information including additional criteria.
-    """
-    criteria: ProxyBrokerCriteria  # Proxy criteria for filtering.
+    def validate_proxy(proxy_url: dict) -> str:
+        """Validate a single proxy and return it if working."""
+        try:
+            return proxybroker._FreeProxy__check_if_proxy_is_working(proxy_url)
+        except requests.exceptions.RequestException:
+            return None
 
-def search_proxy_servers(
-    anonymous: bool = True,
-    countryset: Optional[Set[str]] = None,
-    secure: bool = False,
-    timeout: float = 5.0,
-    max_shape: int = 6,
-    search_outside_if_empty: bool = True,
-) -> List[str]:
-    """Search for proxy servers that match specified criteria."""
-    proxybroker = FreeProxy(
-        anonym=anonymous,
-        country_id=countryset,
-        elite=True,
-        https=secure,
-        timeout=timeout,
-    )
+    while len(valid_proxies) < proxy_count:
+        # Get a new batch of candidate proxies
+        proxy_list = proxybroker.get_proxy_list(outside_search)
+        random.shuffle(proxy_list)
 
-    def search_all(proxybroker: FreeProxy, k: int, search_outside: bool) -> List[str]:
-        candidateset = proxybroker.get_proxy_list(search_outside)
-        random.shuffle(candidateset)
-        positive = set()
+        # Concurrently validate proxies
+        with ThreadPoolExecutor(max_workers=max_threads) as executor:
+            future_to_proxy = {
+                executor.submit(validate_proxy, {proxybroker.schema: f"http://{proxy}"}): proxy
+                for proxy in proxy_list
+            }
 
-        for address in candidateset:
-            setting = {proxybroker.schema: f"http://{address}"}
+            for future in as_completed(future_to_proxy):
+                try:
+                    result = future.result()
+                    if result:
+                        valid_proxies.add(result)
 
-            try:
-                server = proxybroker._FreeProxy__check_if_proxy_is_working(setting)
+                    # Early termination if required proxies are validated
+                    if len(valid_proxies) >= proxy_count:
+                        return list(valid_proxies)[:proxy_count]
+                except Exception:
+                    continue  # Ignore any exceptions
 
-                if not server:
-                    continue
+        # Broaden search criteria if insufficient proxies are found
+        if len(valid_proxies) < proxy_count and outside_search:
+            proxybroker.country_id = None  # Remove country restrictions
 
-                positive.add(server)
+    # Raise an exception if not enough proxies are found
+    if len(valid_proxies) < proxy_count:
+        raise FreeProxyException(
+            f"Only found {len(valid_proxies)} proxies, but {proxy_count} required.")
 
-                if len(positive) < k:
-                    continue
-
-                return list(positive)
-
-            except requests.exceptions.RequestException:
-                continue
-
-        n = len(positive)
-        if n < k and search_outside:
-            proxybroker.country_id = None
-            try:
-                negative = set(search_all(proxybroker, k - n, False))
-            except FreeProxyException:
-                negative = set()
-            positive = positive | negative
-
-        if not positive:
-            raise FreeProxyException("missing proxy servers for criteria")
-
-        return list(positive)
-
-    return search_all(proxybroker, max_shape, search_outside_if_empty)  
-
-def _parse_proxy(proxy: ProxySettings) -> ProxySettings:
-    """Parses a proxy configuration."""
-    assert "server" in proxy, "missing server in the proxy configuration"
-    authorization = [x in proxy for x in ("username", "password")]
-    assert all(authorization) or not any(authorization), "username and password must be provided in pairs or not at all"
-    parsed = {"server": proxy["server"]}
-
-    if proxy.get("bypass"):
-        parsed["bypass"] = proxy["bypass"]
-
-    if all(authorization):
-        parsed["username"] = proxy["username"]
-        parsed["password"] = proxy["password"]
-
-    return parsed
-
-def _search_proxy(proxy: Proxy) -> ProxySettings:
-    """Searches for a proxy server matching the specified criteria."""
-    criteria = proxy.get("criteria", {}).copy()
-    criteria.pop("max_shape", None)
-    server = search_proxy_servers(max_shape=1, **criteria)[0]
-    return {"server": server}
-
-def is_ipv4_address(address: str) -> bool:
-    """Checks if the proxy address is a valid IPv4 address."""
-    try:
-        ipaddress.IPv4Address(address)
-        return True
-    except ipaddress.AddressValueError:
-        return False
-
-def parse_or_search_proxy(proxy: Proxy) -> ProxySettings:
-    """Parses or searches for a proxy server."""
-    assert "server" in proxy, "missing server in the proxy configuration"
-    server_address = re.sub(r'^\w+://', '', proxy["server"]).split(":", maxsplit=1)[0]
-
-    if is_ipv4_address(server_address):
-        return _parse_proxy(proxy)
-
-    assert proxy["server"] == "broker", "unknown proxy server"
-    return _search_proxy(proxy)
+    return list(valid_proxies)[:proxy_count]
