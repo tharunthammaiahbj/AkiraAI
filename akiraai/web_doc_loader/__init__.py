@@ -1,2 +1,1 @@
-from akiraai.web_doc_loader.scrape_do import fetch_single_url_scrape_do
-from akiraai.web_doc_loader.scrape_do import fetch_multiple_url_with_scrape_do
+from akiraai.web_doc_loader.scrape_do import scrape_do_fetch
