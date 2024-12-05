@@ -1,5 +1,5 @@
 """
-Scrape_do module
+Scrape_do module and API integration:
 """
 import urllib.parse
 import requests
@@ -10,6 +10,9 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 def scrape_do_fetch(token, target_url, use_proxy=False, geoCode=None, super_proxy=False):
     """
     Fetches the IP address of the machine associated with the given URL using Scrape.do.
+    (i) "use_proxy" : 1 API Cost 
+    (ii) "use_proxy" & "geoCode" : 1 API Cost
+    (iii) "use_proxy" & "geoCode" & "super_proxy": 2 API Cost
 
     Args:
         token (str): The API token for Scrape.do service.
