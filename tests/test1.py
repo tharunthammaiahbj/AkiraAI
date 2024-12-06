@@ -1,17 +1,37 @@
-"""
-Test for Scrape_do module
-"""
-from akiraai.web_doc_loader.scrape_do import scrape_do_fetch  # Replace with your module name
+from akiraai.web_doc_loader.undetected_chrome_driver import UndetectedChromeDriverScraper  # Replace with the actual module and class name
+from akiraai.utils.logging import get_logger
 
-def test_scrape_do():
-    token = "930002fa47f249da87613f0555eefad972d6bc934aa"  # Replace with your API token
-    target_url = "https://sale.alibaba.com/p/rank/list.html?spm=a2700.product_home_newuser.scenario_overview.topRanking&wx_navbar_transparent=true"  # Example URL for testing
+# Set up logging for visibility
+logger = get_logger(name="test-logger")
 
-    # Test with residential proxy
-    print("Testing with residential proxy...")
-    response = scrape_do_fetch(token, target_url, use_proxy=True, geoCode="US", super_proxy=True)
-    print("Response with residential proxy:", response)
-    
+def test_configure_driver():
+    """
+    Test the `_configure_driver` function to ensure it configures and initializes a Chrome driver correctly.
+    """
+    try:
+        # Initialize your class with required parameters
+        instance = UndetectedChromeDriverScraper(headless=True)  # Add additional arguments if necessary
+
+        # Call the `_configure_driver` method
+        driver = instance._configure_driver()
+
+        # Test driver functionality by loading a test URL
+        test_url = "https://en.wikipedia.org/wiki/Geopolitics"
+        logger.info(f"Opening test URL: {test_url}")
+        driver.get(test_url)
+
+        # Get the entire HTML content of the page
+        page_html = driver.page_source
+        logger.info(f"HTML content retrieved. Length of HTML: {len(page_html)} characters")
+
+        # You can also log the first 500 characters of the page content (if needed)
+        logger.debug(f"First 500 characters of the page: {page_html[:500]}")
+
+        # Quit the driver after test
+        driver.quit()
+        logger.info("Driver successfully configured and tested!")
+    except Exception as e:
+        logger.error(f"Error during testing: {e}")
 
 if __name__ == "__main__":
-    test_scrape_do()
+    test_configure_driver()

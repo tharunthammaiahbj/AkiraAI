@@ -1,4 +1,6 @@
-from .proxy_rotation import (
+from akiraai.utils.proxy_rotation import (
     ProxyFilter,
     ProxyFetcher
 )
+
+from akiraai.utils.logging import get_logger
