@@ -106,6 +106,7 @@ class UndetectedChromeDriverScraper(ScraperFramework):
 
           """
 
+          driver = None
           attempt = 0
           while attempt < self.retry_limit:
             try:
@@ -119,10 +120,13 @@ class UndetectedChromeDriverScraper(ScraperFramework):
             except Exception as e:
                 attempt += 1
                 logger.error(f"Error fetching {url} on attempt {attempt}: {e}")
+                if attempt < self.retry_limit:
+                    await asyncio.sleep(1)
+                    
                 if attempt == self.retry_limit:
                     return f"Error: Failed to fetch {url} after {self.retry_limit} attempts"
             finally:
-                if 'driver' in locals():
+                if driver:
                     driver.quit() 
      
      async def scrape_urls_async(self, urls : List[str]) -> Dict[str, str]:
