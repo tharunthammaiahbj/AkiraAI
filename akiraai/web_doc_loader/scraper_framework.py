@@ -46,7 +46,7 @@ class ScraperFramework(ABC):
 
 
     @abstractmethod
-    def _configure_driver(self) -> Any:
+    def _configure_scraper(self) -> Any:
         """
         Abstract method to configure the web driver or API client.
 

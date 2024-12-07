@@ -1,6 +1,7 @@
 import aiohttp
 import asyncio
 import random
+from typing import Optional
 from akiraai.web_doc_loader.scraper_framework import ScraperFramework
 from akiraai.utils.logging import get_logger
 from akiraai.utils.proxy_rotation import ProxyFetcher,ProxyFilter
@@ -21,7 +22,7 @@ class UndetectedChromeDriverScraper(ScraperFramework):
           A concrete implementation of the ScraperFramework using undetected_chromedriver.
      """
 
-     def _configure_proxies(self):
+     def _configure_proxies(self) ->Optional[str]:
          """
 
          Configures proxy management based on the selected proxy_mode.
@@ -31,7 +32,9 @@ class UndetectedChromeDriverScraper(ScraperFramework):
          """
 
          if self.proxy_mode == "freeproxy":
-             
+
+             logger.info("Freeproxy mode selected. Configuring a random free proxy.")
+
              proxy_filter : ProxyFilter = {
                  "anonymous":True,
                  "country_preference_set":None,
@@ -40,21 +43,24 @@ class UndetectedChromeDriverScraper(ScraperFramework):
                  "secure":False,
                  "time_out":5
              }
-             proxy_list = ProxyFetcher(proxy_filter=proxy_filter)
+             proxy_fetcher = ProxyFetcher(proxy_filter=proxy_filter)
+             proxy_list = proxy_fetcher.validated_proxy_list()
              random_proxy =random.choice(proxy_list)
+             return random_proxy
              
          elif self.proxy_mode == "scrapedo":
-            pass                          
-             
+            logger.info("Scrape.do proxy mode selected. Will use scrape_do_fetch for requests.")                         
+            return None
              
          elif self.proxy_mode == "none":
              logger.info("Proceeding without Proxy Configuration...")
-    
+             return None
              
+             
+         return None
 
 
-
-     def _configure_driver(self) ->uc.Chrome:
+     def _configure_scraper(self) ->uc.Chrome:
           
           """
            Configures and returns an instance of the Chrome driver with optional proxy settings.
@@ -72,7 +78,11 @@ class UndetectedChromeDriverScraper(ScraperFramework):
           options.add_argument("--disable-dev-shm-usage")
 
           #proxy management:
-          
+          proxy = self._configure_proxies()
+          if self.proxy_mode == "freeproxy" and proxy:
+              options.add_argument(f"--proxy-server={proxy}")
+              logger.info(f"Proxy configured: {proxy}")
+                                      
 
           try:
               return uc.Chrome(options=options)
@@ -99,7 +109,7 @@ class UndetectedChromeDriverScraper(ScraperFramework):
           attempt = 0
           while attempt < self.retry_limit:
             try:
-                driver = self._configure_driver()
+                driver = self._configure_scraper()
                 logger.info(f"Fetching URL: {url} (Attempt {attempt + 1})")
                 driver.get(url)
                 page_content = driver.page_source
