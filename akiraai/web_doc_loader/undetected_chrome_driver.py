@@ -1,9 +1,13 @@
-from akiraai.web_doc_loader.scraper_framework import ScraperFramework
-from akiraai.utils.logging import get_logger
-from selenium.webdriver.chrome.options import Options as ChromeOptions
-from concurrent.futures import ThreadPoolExecutor
 import aiohttp
 import asyncio
+import random
+from akiraai.web_doc_loader.scraper_framework import ScraperFramework
+from akiraai.utils.logging import get_logger
+from akiraai.utils.proxy_rotation import ProxyFetcher,ProxyFilter
+from akiraai.web_doc_loader.scrape_do import scrape_do_fetch
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from concurrent.futures import ThreadPoolExecutor
+
 from typing import List, Dict
 import undetected_chromedriver as uc
 
@@ -27,9 +31,15 @@ class UndetectedChromeDriverScraper(ScraperFramework):
          """
 
          if self.proxy_mode == "freeproxy":
-             pass
+             
+             proxy_filter : ProxyFilter 
+             proxy_list = ProxyFetcher(proxy_filter=proxy_filter)
+             random_proxy =random.choice(proxy_list)
+             
          elif self.proxy_mode == "scrapedo":
-             pass
+            pass                          
+             
+             
          elif self.proxy_mode == "none":
              logger.info("Proceeding without Proxy Configuration...")
     

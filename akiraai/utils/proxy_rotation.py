@@ -13,12 +13,12 @@ logger = get_logger(
 
 class ProxyFilter(TypedDict, total=False):
 
-    anonymous: bool
-    secure: bool
-    time_out: float
-    country_preference_set: Set[str]
-    outside_search: bool
-    proxy_count: Optional[int]
+    anonymous: bool = True
+    secure: bool = False
+    time_out: float = 5.0
+    country_preference_set: Set[str] = None
+    outside_search: bool = True
+    proxy_count: Optional[int] = 5
 
 
 class ProxyFetcher:
@@ -27,19 +27,19 @@ class ProxyFetcher:
         self.proxy_filter = proxy_filter
 
         self.proxybroker = FreeProxy(
-            anonym=self.proxy_filter.get("anonymous", True),
-            https=self.proxy_filter.get("secure", False),
-            country_id=self.proxy_filter.get("country_preference", None),
-            timeout=self.proxy_filter.get("time_out", 5.0),
+            anonym=self.proxy_filter.get("anonymous"),
+            https=self.proxy_filter.get("secure"),
+            country_id=self.proxy_filter.get("country_preference"),
+            timeout=self.proxy_filter.get("time_out"),
             elite=True,
         )
-        self.proxy_count = self.proxy_filter.get("proxy_count", 5)
+        self.proxy_count = self.proxy_filter.get("proxy_count")
 
     def validated_proxy_list(self) -> List[str]:
         return active_auth_proxy_list(
             proxybroker=self.proxybroker,
             proxy_count=self.proxy_count,
-            outside_search=self.proxy_filter.get("outside_search", True),
+            outside_search=self.proxy_filter.get("outside_search"),
         )
 
 
@@ -104,23 +104,3 @@ def active_auth_proxy_list(proxybroker, proxy_count: int, outside_search: bool) 
 
     return list(valid_proxies)[:proxy_count]
 
-
-
-def get_random_proxy_from_list(proxies: List[str]) -> Optional[str]:
-
-
-    """
-    Returns a random proxy from the given list of proxies.
-
-    Args:
-        proxies (List[str]): A list of proxy strings.
-
-    Returns:
-        Optional[str]: A random proxy string or None if the list is empty.
-
-    """
-
-    if not proxies:
-        return None
-    
-    return random.choice(proxies)
