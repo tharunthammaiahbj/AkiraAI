@@ -1,13 +1,15 @@
 """
 Scrape_do module and API integration:
 """
+import os
+from dotenv import load_dotenv
 import urllib.parse
 import requests
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-def scrape_do_fetch(token, target_url, use_proxy=False, geoCode=None, super_proxy=False):
+def scrape_do_fetch( target_url, geoCode=None, super_proxy=False, use_proxy =False):
     """
     Fetches the IP address of the machine associated with the given URL using Scrape.do.
     (i) "use_proxy" : 1 API Cost 
@@ -15,9 +17,8 @@ def scrape_do_fetch(token, target_url, use_proxy=False, geoCode=None, super_prox
     (iii) "use_proxy" & "geoCode" & "super_proxy": 2 API Cost
 
     Args:
-        token (str): The API token for Scrape.do service.
+        
         target_url (str): A valid web page URL to fetch its associated IP address.
-        use_proxy (bool): Whether to use Scrape.do proxy mode. Default is False.
         geoCode (str, optional): Specify the country code for 
         geolocation-based proxies. Default is None.
         super_proxy (bool): If True, use Residential & Mobile Proxy Networks. Default is False.
@@ -25,6 +26,9 @@ def scrape_do_fetch(token, target_url, use_proxy=False, geoCode=None, super_prox
     Returns:
         str: The raw response from the target URL.
     """
+    load_dotenv()
+    token = os.getenv("SCRAPE_DO_TOKEN")
+
     encoded_url = urllib.parse.quote(target_url)
     if use_proxy:
         proxy_mode_url = f"http://{token}:@proxy.scrape.do:8080"

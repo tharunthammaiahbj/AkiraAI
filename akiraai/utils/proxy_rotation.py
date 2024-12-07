@@ -13,16 +13,18 @@ logger = get_logger(
 
 class ProxyFilter(TypedDict, total=False):
 
-    anonymous: bool = True
-    secure: bool = False
-    time_out: float = 5.0
-    country_preference_set: Set[str] = None
-    outside_search: bool = True
-    proxy_count: Optional[int] = 5
+    "Have to mention all the attributes compulsorily"
+
+    anonymous: bool
+    secure: bool
+    time_out: float
+    country_preference_set: Set[str]
+    outside_search: bool 
+    proxy_count: Optional[int] 
 
 
 class ProxyFetcher:
-    def __init__(self, proxy_filter: ProxyFilter):
+    def __init__(self, proxy_filter: ProxyFilter ):
 
         self.proxy_filter = proxy_filter
 
