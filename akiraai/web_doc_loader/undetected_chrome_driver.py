@@ -120,8 +120,6 @@ class UndetectedChromeDriverScraper(ScraperFramework):
             except Exception as e:
                 attempt += 1
                 logger.error(f"Error fetching {url} on attempt {attempt}: {e}")
-                if attempt < self.retry_limit:
-                    await asyncio.sleep(1)
                     
                 if attempt == self.retry_limit:
                     return f"Error: Failed to fetch {url} after {self.retry_limit} attempts"
@@ -129,30 +127,26 @@ class UndetectedChromeDriverScraper(ScraperFramework):
                 if driver:
                     driver.quit() 
      
-     async def scrape_urls_async(self, urls : List[str]) -> Dict[str, str]:
-         
-         """
-         Concurrently scrapes multiple URLs using undetected_chromedriver.
+     async def scrape_urls_async(self, urls: List[str]) -> Dict[str, str]:
+        """
+        Concurrently scrapes multiple URLs using undetected_chromedriver.
 
-         Args:
+        Args:
             urls (List[str]): List of URLs to scrape.
-         
-         Returns:
-            Dict[str, str]: A dictionary mapping URLs to their scraped content.   
 
-         """
+        Returns:
+            Dict[str, str]: A dictionary mapping URLs to their scraped content.
+        """
+        # Directly call async scrape_url_async without ThreadPoolExecutor
+        tasks = [self.scrape_url_async(url) for url in urls]
 
-         loop = asyncio.get_event_loop()
+    # Await the results using asyncio.gather
+        results = await asyncio.gather(*tasks, return_exceptions=True)
 
-         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
-             tasks = [
-                 loop.run_in_executor(executor, self.scrape_url_async, url)
-                 for url in urls
-             ]
+    # Map the results to URLs
+        return {url: result for url, result in zip(urls, results)}
 
-             results = await asyncio.gather(*tasks, return_exceptions=True)
-
-         return {url: result for url, result in zip(urls, results)}      
+      
          
 
           
