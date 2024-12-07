@@ -1,6 +1,4 @@
-import ipaddress
 import random
-import re
 from typing import List, Optional, Set, TypedDict
 import requests
 from fp.errors import FreeProxyException
@@ -105,3 +103,24 @@ def active_auth_proxy_list(proxybroker, proxy_count: int, outside_search: bool) 
             f"Only found {len(valid_proxies)} proxies, but {proxy_count} required.")
 
     return list(valid_proxies)[:proxy_count]
+
+
+
+def get_random_proxy_from_list(proxies: List[str]) -> Optional[str]:
+
+
+    """
+    Returns a random proxy from the given list of proxies.
+
+    Args:
+        proxies (List[str]): A list of proxy strings.
+
+    Returns:
+        Optional[str]: A random proxy string or None if the list is empty.
+
+    """
+
+    if not proxies:
+        return None
+    
+    return random.choice(proxies)

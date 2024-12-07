@@ -14,7 +14,7 @@ class ScraperFramework(ABC):
             self,
             headless: bool = True,
             retry_limit: int = 3,
-            proxy_filter: Optional[ProxyFilter] = None,
+            proxy_mode : Optional[str] = "none",
             timeout: int = 30,
             max_workers: int = 10,  # Max concurrent threads
             **kwargs: Any
@@ -29,11 +29,18 @@ class ScraperFramework(ABC):
             max_workers (int): Maximum number of concurrent threads for fetching URLs.
             kwargs (Any): Additional configuration parameters.
         """
+
+        if proxy_mode:
+            proxy_mode = proxy_mode.replace(" ", "").lower()
+            if proxy_mode not in ['freeproxy', 'scrapedo', 'none']:
+                 raise ValueError(f"Invalid proxy_mode: {proxy_mode}. Valid options are 'freeproxy', 'scrapedo', or 'none'.")
+       
+
         self.headless = headless
         self.retry_limit = retry_limit
         self.timeout = timeout
         self.max_workers = max_workers
-        self.proxies = ProxyFetcher(proxy_filter=proxy_filter) if proxy_filter else None
+        self.proxy_mode = proxy_mode
         self.config = kwargs
         self.executor = ThreadPoolExecutor(max_workers=self.max_workers)
 

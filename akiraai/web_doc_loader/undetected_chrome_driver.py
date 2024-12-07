@@ -17,6 +17,26 @@ class UndetectedChromeDriverScraper(ScraperFramework):
           A concrete implementation of the ScraperFramework using undetected_chromedriver.
      """
 
+     def _configure_proxies(self):
+         """
+
+         Configures proxy management based on the selected proxy_mode.
+         This method will be invoked automatically when needed.
+         Available proxy_modes: 'freeproxy', 'scrapedo', or 'none'(default) .
+
+         """
+
+         if self.proxy_mode == "freeproxy":
+             pass
+         elif self.proxy_mode == "scrapedo":
+             pass
+         elif self.proxy_mode == "none":
+             logger.info("Proceeding without Proxy Configuration...")
+    
+             
+
+
+
      def _configure_driver(self) ->uc.Chrome:
           
           """
@@ -34,7 +54,17 @@ class UndetectedChromeDriverScraper(ScraperFramework):
           options.add_argument("--no-sandbox")
           options.add_argument("--disable-dev-shm-usage")
 
-          return uc.Chrome(options=options)
+          #proxy management:
+          
+
+          try:
+              return uc.Chrome(options=options)
+          
+          except Exception as e:
+              logger.error(f"Failed to Configure the Chrome Driver: {e}")
+              raise
+
+              
 
      async def scrape_url_async(self, url : str) -> str:
 
