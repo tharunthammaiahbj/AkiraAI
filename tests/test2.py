@@ -1,107 +1,85 @@
-import asyncio
-import random
-import undetected_chromedriver as uc
-from selenium.webdriver.chrome.options import Options as ChromeOptions
-from typing import List, Dict
 from concurrent.futures import ThreadPoolExecutor
-from aiohttp import ClientSession
-from akiraai.utils.proxy_rotation import ProxyFetcher,ProxyFilter
+from undetected_chromedriver import Chrome, ChromeOptions
+import os
 
-class UndetectedChromeDriverScraper:
-    def __init__(self, max_workers: int = 5, retry_limit: int = 3, proxy_mode: str = "none", headless: bool = True):
-        self.max_workers = max_workers
-        self.retry_limit = retry_limit
-        self.proxy_mode = proxy_mode
-        self.headless = headless
-        self.semaphore = asyncio.Semaphore(max_workers)
 
-    def _configure_proxies(self) -> str:
-        """Configures and returns proxy settings if needed."""
-        if self.proxy_mode == "freeproxy":
-            # Assuming ProxyFetcher and ProxyFilter are properly defined elsewhere.
-            proxy_filter = {
-                "anonymous": True,
-                "country_preference_set": None,
-                "outside_search": True,
-                "proxy_count": 5,
-                "secure": False,
-                "time_out": 5
+def initialize_driver(profile_path):
+    """
+    Initializes a Chrome driver instance with a unique profile.
+    """
+    options = ChromeOptions()
+    options.add_argument(f"user-data-dir={profile_path}")  # Assign unique profile
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--headless")  # Optional for headless operation
+
+    # Return the initialized Chrome driver
+    return Chrome(options=options, user_multi_procs=True)
+
+
+def fetch_url(driver, url):
+    """
+    Fetches the HTML content of a given URL using a driver.
+    """
+    try:
+        driver.get(url)
+        html = driver.page_source
+        print(f"Fetched {len(html)} characters from {url}")
+        return url, html
+    except Exception as e:
+        print(f"Error fetching {url}: {e}")
+        return url, None
+
+
+def process_urls_with_drivers(urls, profile_base_dir):
+    """
+    Processes a list of URLs using 3 Chrome drivers initialized with profiles.
+    """
+    # Ensure profile directories exist
+    profiles = [os.path.join(profile_base_dir, f"profile_{i}") for i in range(3)]
+    for profile in profiles:
+        os.makedirs(profile, exist_ok=True)
+
+    # Initialize 3 Chrome drivers
+    drivers = [initialize_driver(profile) for profile in profiles]
+
+    try:
+        # Use ThreadPoolExecutor to manage concurrent URL fetching
+        results = []
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            # Assign URLs to drivers in a round-robin fashion
+            futures = {
+                executor.submit(fetch_url, drivers[i % 3], url): url for i, url in enumerate(urls)
             }
-            proxy_fetcher = ProxyFetcher(proxy_filter=proxy_filter)
-            proxy_list = proxy_fetcher.validated_proxy_list()
-            return random.choice(proxy_list) if proxy_list else None
-        elif self.proxy_mode == "scrapedo":
-            return None
-        return None
+            for future in futures:
+                results.append(future.result())
 
-    def _configure_scraper(self) -> uc.Chrome:
-        """Configure the Chrome driver with optional proxy settings."""
-        options = ChromeOptions()
-        options.headless = self.headless
-        options.add_argument("--disable-blink-features=AutomationControlled")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
+        return results
+    finally:
+        # Quit all drivers
+        for driver in drivers:
+            driver.quit()
 
-        proxy = self._configure_proxies()
-        if proxy:
-            options.add_argument(f"--proxy-server={proxy}")
 
-        return uc.Chrome(options=options)
-
-    async def scrape_url_async(self, url: str) -> str:
-        """Fetches a single URL using undetected_chromedriver."""
-        driver = None
-        attempt = 0
-        while attempt < self.retry_limit:
-            try:
-                driver = self._configure_scraper()
-                driver.get(url)
-                page_content = driver.page_source
-                driver.quit()
-                return page_content
-            except Exception as e:
-                attempt += 1
-                if attempt == self.retry_limit:
-                    return f"Error: Failed to fetch {url} after {self.retry_limit} attempts"
-            finally:
-                if driver:
-                    driver.quit()
-
-    async def scrape_urls_async(self, urls: List[str]) -> Dict[str, str]:
-        """Concurrent URL scraping using undetected_chromedriver."""
-        tasks = []
-        for url in urls:
-            tasks.append(self.scrape_url_with_pool(url))
-        
-        # Run all scraping tasks concurrently
-        results = await asyncio.gather(*tasks, return_exceptions=True)
-        return {url: result for url, result in zip(urls, results)}
-
-    async def scrape_url_with_pool(self, url: str) -> str:
-        """Handles concurrency and browser pool management."""
-        async with self.semaphore:
-            return await self.scrape_url_async(url)
-
-# Helper function for running the asynchronous code
-async def main():
-    scraper = UndetectedChromeDriverScraper(max_workers=5, retry_limit=3, proxy_mode="freeproxy", headless=True)
-
-    urls = [
-        "https://en.wikipedia.org/wiki/Deaths_in_2024",
-        "https://www.amazon.in/iphone/s?k=iphone",
-        "https://www.amazon.in/gp/bestsellers/?ref_=nav_cs_bestsellers",
-        "https://www.amazon.in/gp/bestsellers/automotive/ref=zg_bs_nav_automotive_0",
-        "https://www.amazon.in/gp/bestsellers/automotive/5257482031/ref=zg_bs_nav_automotive_1",
-        "https://www.amazon.in/gp/bestsellers/automotive/5257605031/ref=zg_bs_nav_automotive_2_5257482031",
-        "https://www.amazon.in/gp/bestsellers/automotive/5257606031/ref=zg_bs_nav_automotive_2_5257605031"
-    ]
-    
-    results = await scraper.scrape_urls_async(urls)
-    
-    # Print results
-    for url, content in results.items():
-        print(f"URL: {url}\nContent Length: {len(content)}")
-
-# Run the async main function
 if __name__ == "__main__":
-    asyncio.run(main())
+    # List of URLs to process
+    urls = [
+         "https://en.wikipedia.org/wiki/Deaths_in_2024",
+    "https://www.amazon.in/gp/bestsellers/?ref_=nav_cs_bestsellers",
+    "https://www.amazon.in/gp/bestsellers/automotive/ref=zg_bs_nav_automotive_0",
+    "https://www.amazon.in/gp/bestsellers/automotive/5257482031/ref=zg_bs_nav_automotive_1",
+    "https://www.amazon.in/gp/bestsellers/automotive/5257605031/ref=zg_bs_nav_automotive_2_5257482031"
+    ]
+
+    # Base directory for storing Chrome profiles
+    profile_base_dir = "./chrome_profiles"
+
+    # Process URLs
+    results = process_urls_with_drivers(urls, profile_base_dir)
+
+    # Print results
+    for url, html in results:
+        if html:
+            print(f"Success: {url} - Length: {len(html)}")
+        else:
+            print(f"Failed: {url}")

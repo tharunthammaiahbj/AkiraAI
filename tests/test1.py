@@ -4,7 +4,7 @@ import json
 
 undetected_driver = UndetectedChromeDriverScraper(
     proxy_mode="none",
-    max_workers=5
+    max_workers=3
     )
 
 def save_to_json(data, filename="scraped_results.json"):
@@ -17,16 +17,15 @@ def save_to_json(data, filename="scraped_results.json"):
 
 urls = [
     "https://en.wikipedia.org/wiki/Deaths_in_2024",
-    "https://www.amazon.in/iphone/s?k=iphone",
     "https://www.amazon.in/gp/bestsellers/?ref_=nav_cs_bestsellers",
     "https://www.amazon.in/gp/bestsellers/automotive/ref=zg_bs_nav_automotive_0",
     "https://www.amazon.in/gp/bestsellers/automotive/5257482031/ref=zg_bs_nav_automotive_1",
-    "https://www.amazon.in/gp/bestsellers/automotive/5257605031/ref=zg_bs_nav_automotive_2_5257482031",
-    "https://www.amazon.in/gp/bestsellers/automotive/5257606031/ref=zg_bs_nav_automotive_2_5257605031"
+    "https://www.amazon.in/gp/bestsellers/automotive/5257605031/ref=zg_bs_nav_automotive_2_5257482031"
 
 ]
 
 results = asyncio.run(undetected_driver.scrape_urls_async(urls=urls))
+
 
 save_to_json(results)
 

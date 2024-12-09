@@ -16,7 +16,7 @@ class ScraperFramework(ABC):
             retry_limit: int = 3,
             proxy_mode : Optional[str] = "none",
             timeout: int = 30,
-            max_workers: int = 10,  # Max concurrent threads
+            max_workers: int = 5,  # Max concurrent threads
             **kwargs: Any
     ):
         """
@@ -46,38 +46,11 @@ class ScraperFramework(ABC):
 
 
     @abstractmethod
-    def _configure_scraper(self) -> Any:
+    def _configure_driver(self) -> Any:
         """
         Abstract method to configure the web driver or API client.
 
         Returns:
             Configured driver or client instance.
-        """
-        pass
-
-    async def _fetch_url_async(self, url: str) -> str:
-        """
-        Asynchronous wrapper to fetch a single URL (could be through a headless browser or API).
-
-        Args:
-            url (str): URL to fetch.
-
-        Returns:
-            str: The scraped content (HTML or JSON) of the URL.
-        """
-        # This function can be overridden in concrete implementations for async URL fetching
-        raise NotImplementedError("This method must be implemented in the subclass")
-
-
-    @abstractmethod
-    async def scrape_urls_async(self, urls: List[str]) -> Dict[str, str]:
-        """
-        Abstract method to scrape multiple URLs asynchronously.
-
-        Args:
-            urls (List[str]): A list of URLs to scrape.
-
-        Returns:
-            Dict[str, str]: A dictionary of URLs and their corresponding scraped content.
         """
         pass

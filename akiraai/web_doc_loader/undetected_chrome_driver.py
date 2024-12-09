@@ -1,4 +1,3 @@
-import aiohttp
 import asyncio
 import random
 from typing import Optional
@@ -7,7 +6,9 @@ from akiraai.utils.logging import get_logger
 from akiraai.utils.proxy_rotation import ProxyFetcher,ProxyFilter
 from akiraai.web_doc_loader.scrape_do import scrape_do_fetch
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-from concurrent.futures import ThreadPoolExecutor
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 from typing import List, Dict
 import undetected_chromedriver as uc
@@ -60,7 +61,7 @@ class UndetectedChromeDriverScraper(ScraperFramework):
          return None
 
 
-     def _configure_scraper(self) ->uc.Chrome:
+     def _configure_driver(self) ->uc.Chrome:
           
           """
            Configures and returns an instance of the Chrome driver with optional proxy settings.
@@ -72,7 +73,7 @@ class UndetectedChromeDriverScraper(ScraperFramework):
           options = ChromeOptions()
           options.headless = self.headless
 
-
+          
           options.add_argument("--disable-blink-features=AutomationControlled")
           options.add_argument("--no-sandbox")
           options.add_argument("--disable-dev-shm-usage")
@@ -93,27 +94,32 @@ class UndetectedChromeDriverScraper(ScraperFramework):
 
               
 
-     async def scrape_url_async(self, url : str) -> str:
+     async def scrape_url_async(self, url: str) -> str:
+        """
+        Fetches a single URL using undetected_chromedriver.
 
-          """
-          Fetches a single URL using undetected_chromedriver.
+        Args:
+          url (str): The URL to fetch.
 
-          Args:
-            url (str): The URL to fetch.
-
-          Returns:
-            str: The HTML content of the page or an error message.
-
-          """
-
-          driver = None
-          attempt = 0
-          while attempt < self.retry_limit:
+        Returns:
+          str: The HTML content of the page or an error message.
+        """
+        driver = None
+        attempt = 0
+        while attempt < self.retry_limit:
             try:
-                driver = self._configure_scraper()
+                driver = self._configure_driver()
                 logger.info(f"Fetching URL: {url} (Attempt {attempt + 1})")
                 driver.get(url)
-                page_content = driver.page_source
+                
+                # Wait for the <body> tag to ensure page content is loaded
+                WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located((By.TAG_NAME, "body"))
+                )
+
+                # Get the entire HTML content of the page (from <body>)
+                page_content = driver.find_element(By.TAG_NAME, "body").get_attribute('outerHTML')
+
                 logger.info(f"Successfully scraped {url}")
                 driver.quit()
                 return page_content
@@ -125,7 +131,8 @@ class UndetectedChromeDriverScraper(ScraperFramework):
                     return f"Error: Failed to fetch {url} after {self.retry_limit} attempts"
             finally:
                 if driver:
-                    driver.quit() 
+                    driver.quit()
+
      
      async def scrape_urls_async(self, urls: List[str]) -> Dict[str, str]:
         """
