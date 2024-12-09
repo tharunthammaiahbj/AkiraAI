@@ -16,7 +16,6 @@ class ScraperFramework(ABC):
             retry_limit: int = 3,
             proxy_mode : Optional[str] = "none",
             timeout: int = 30,
-            max_workers: int = 5,  # Max concurrent threads
             **kwargs: Any
     ):
         """
@@ -39,14 +38,12 @@ class ScraperFramework(ABC):
         self.headless = headless
         self.retry_limit = retry_limit
         self.timeout = timeout
-        self.max_workers = max_workers
         self.proxy_mode = proxy_mode
         self.config = kwargs
-        self.executor = ThreadPoolExecutor(max_workers=self.max_workers)
 
 
     @abstractmethod
-    def _configure_driver(self) -> Any:
+    def initialise_driver(self) -> Any:
         """
         Abstract method to configure the web driver or API client.
 

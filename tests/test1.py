@@ -1,19 +1,8 @@
 from akiraai.web_doc_loader.undetected_chrome_driver import UndetectedChromeDriverScraper
-import asyncio
-import json
 
-undetected_driver = UndetectedChromeDriverScraper(
-    proxy_mode="none",
-    max_workers=3
-    )
-
-def save_to_json(data, filename="scraped_results.json"):
-
-    trimmed_data = {url: content[:500] if isinstance(content, str) else 'Error' for url, content in data.items()}
-    
-    with open(filename, 'w', encoding='utf-8') as json_file:
-        json.dump(trimmed_data, json_file, ensure_ascii=False, indent=4)
-
+scraper = UndetectedChromeDriverScraper(
+    num_instances=3
+)
 
 urls = [
     "https://en.wikipedia.org/wiki/Deaths_in_2024",
@@ -21,18 +10,14 @@ urls = [
     "https://www.amazon.in/gp/bestsellers/automotive/ref=zg_bs_nav_automotive_0",
     "https://www.amazon.in/gp/bestsellers/automotive/5257482031/ref=zg_bs_nav_automotive_1",
     "https://www.amazon.in/gp/bestsellers/automotive/5257605031/ref=zg_bs_nav_automotive_2_5257482031"
-
 ]
 
-results = asyncio.run(undetected_driver.scrape_urls_async(urls=urls))
+results = scraper.process_urls_with_drivers(urls)
 
-
-save_to_json(results)
-
-
-for url, content in results.items():
-        print(f"URL: {url}\nContent length: {len(content) if isinstance(content, str) else 'Error'}\n")
-
-
-
+    # Print results
+for url, html in results.items():
+    if html:
+        print(f"Success: {url} - Length: {len(html)}")
+    else:
+        print(f"Failed: {url}")
 

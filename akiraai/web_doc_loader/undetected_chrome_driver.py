@@ -1,167 +1,129 @@
-import asyncio
 import random
-from typing import Optional
+import os
+from typing import Optional, List, Dict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from akiraai.web_doc_loader.scraper_framework import ScraperFramework
+from undetected_chromedriver import Chrome, ChromeOptions
 from akiraai.utils.logging import get_logger
-from akiraai.utils.proxy_rotation import ProxyFetcher,ProxyFilter
-from akiraai.web_doc_loader.scrape_do import scrape_do_fetch
-from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
-
-from typing import List, Dict
-import undetected_chromedriver as uc
-
+from akiraai.utils.proxy_rotation import ProxyFetcher, ProxyFilter
 
 logger = get_logger(name="undetected_chrome_driver_logger")
 
 class UndetectedChromeDriverScraper(ScraperFramework):
+    """
+    A concrete implementation of the ScraperFramework using undetected_chromedriver.
+    """
 
-
-     """
-          A concrete implementation of the ScraperFramework using undetected_chromedriver.
-     """
-
-     def _configure_proxies(self) ->Optional[str]:
-         """
-
-         Configures proxy management based on the selected proxy_mode.
-         This method will be invoked automatically when needed.
-         Available proxy_modes: 'freeproxy', 'scrapedo', or 'none'(default) .
-
-         """
-
-         if self.proxy_mode == "freeproxy":
-
-             logger.info("Freeproxy mode selected. Configuring a random free proxy.")
-
-             proxy_filter : ProxyFilter = {
-                 "anonymous":True,
-                 "country_preference_set":None,
-                 "outside_search":True,
-                 "proxy_count": 5,
-                 "secure":False,
-                 "time_out":5
-             }
-             proxy_fetcher = ProxyFetcher(proxy_filter=proxy_filter)
-             proxy_list = proxy_fetcher.validated_proxy_list()
-             random_proxy =random.choice(proxy_list)
-             return random_proxy
-             
-         elif self.proxy_mode == "scrapedo":
-            logger.info("Scrape.do proxy mode selected. Will use scrape_do_fetch for requests.")                         
-            return None
-             
-         elif self.proxy_mode == "none":
-             logger.info("Proceeding without Proxy Configuration...")
-             return None
-             
-             
-         return None
-
-
-     def _configure_driver(self) ->uc.Chrome:
-          
-          """
-           Configures and returns an instance of the Chrome driver with optional proxy settings.
-           Returns:
-            uc.Chrome: Configured Chrome driver instance.
-
-          """
-
-          options = ChromeOptions()
-          options.headless = self.headless
-
-          
-          options.add_argument("--disable-blink-features=AutomationControlled")
-          options.add_argument("--no-sandbox")
-          options.add_argument("--disable-dev-shm-usage")
-
-          #proxy management:
-          proxy = self._configure_proxies()
-          if self.proxy_mode == "freeproxy" and proxy:
-              options.add_argument(f"--proxy-server={proxy}")
-              logger.info(f"Proxy configured: {proxy}")
-                                      
-
-          try:
-              return uc.Chrome(options=options)
-          
-          except Exception as e:
-              logger.error(f"Failed to Configure the Chrome Driver: {e}")
-              raise
-
-              
-
-     async def scrape_url_async(self, url: str) -> str:
+    def __init__(self, num_instances: int, **kwargs):
         """
-        Fetches a single URL using undetected_chromedriver.
+        Initialize the scraper with instance count and other configuration.
 
         Args:
-          url (str): The URL to fetch.
-
-        Returns:
-          str: The HTML content of the page or an error message.
+            num_instances (int): Number of Chrome driver instances to initialize.
+            kwargs: Additional arguments passed to the parent class constructor.
         """
-        driver = None
-        attempt = 0
-        while attempt < self.retry_limit:
-            try:
-                driver = self._configure_driver()
-                logger.info(f"Fetching URL: {url} (Attempt {attempt + 1})")
-                driver.get(url)
-                
-                # Wait for the <body> tag to ensure page content is loaded
-                WebDriverWait(driver, 20).until(
-                    EC.presence_of_element_located((By.TAG_NAME, "body"))
-                )
+        super().__init__(**kwargs)
+        self.num_instances = num_instances
 
-                # Get the entire HTML content of the page (from <body>)
-                page_content = driver.find_element(By.TAG_NAME, "body").get_attribute('outerHTML')
+    def _configure_proxies(self) -> Optional[str]:
+        """
+        Configures proxy management based on the selected proxy_mode.
+        """
+        if self.proxy_mode == "freeproxy":
+            logger.info("Freeproxy mode selected. Configuring a random free proxy.")
+            proxy_filter = {
+                "anonymous": True,
+                "country_preference_set": None,
+                "outside_search": True,
+                "proxy_count": 5,
+                "secure": False,
+                "time_out": 5,
+            }
+            proxy_fetcher = ProxyFetcher(proxy_filter=proxy_filter)
+            proxy_list = proxy_fetcher.validated_proxy_list()
+            if proxy_list:
+                random_proxy = random.choice(proxy_list)
+                return random_proxy
+            else:
+                logger.warning("No valid proxies found. Proceeding without proxy.")
+        elif self.proxy_mode == "scrapedo":
+            logger.info("Scrape.do proxy mode selected. Will use scrape_do_fetch for requests.")
+        elif self.proxy_mode == "none":
+            logger.info("Proceeding without Proxy Configuration...")
+        return None
 
-                logger.info(f"Successfully scraped {url}")
-                driver.quit()
-                return page_content
-            except Exception as e:
-                attempt += 1
-                logger.error(f"Error fetching {url} on attempt {attempt}: {e}")
-                    
-                if attempt == self.retry_limit:
-                    return f"Error: Failed to fetch {url} after {self.retry_limit} attempts"
-            finally:
-                if driver:
+    def initialise_driver(self, profile_path: str) -> Chrome:
+        """
+        Configures and returns an instance of the Chrome driver with optional proxy settings.
+        """
+        options = ChromeOptions()
+        options.headless = self.headless
+        options.add_argument(f"user-data-dir={profile_path}")
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+
+        # Proxy management:
+        proxy = self._configure_proxies()
+        if self.proxy_mode == "freeproxy" and proxy:
+            options.add_argument(f"--proxy-server={proxy}")
+            logger.info(f"Proxy configured: {proxy}")
+
+        try:
+            return Chrome(options=options, user_multi_procs=True)
+        except Exception as e:
+            logger.error(f"Failed to Configure the Chrome Driver: {e}")
+            raise
+
+    def fetch_url(self, driver: Chrome, url: str) -> Dict[str, Optional[str]]:
+        """
+        Fetches the HTML content of a given URL using a driver.
+        """
+        try:
+            driver.get(url)
+            html = driver.page_source
+            logger.info(f"Fetched {len(html)} characters from {url}")
+            return url, html
+        except Exception as e:
+            logger.error(f"Error fetching {url}: {e}")
+            return url, None
+
+    def process_urls_with_drivers(self, urls: List[str]) -> Dict[str, Optional[str]]:
+        """
+        Processes a list of URLs using multiple Chrome drivers initialized with profiles.
+        Returns a dictionary mapping URLs to their HTML content.
+        """
+
+        profile_base_dir = "./chrome_profiles"
+        profiles = [os.path.join(profile_base_dir, f"profile_{i}") for i in range(self.num_instances)]
+        drivers = []
+        results: Dict[str, Optional[str]] = {}
+
+        try:
+            # Initialize drivers
+            for profile in profiles:
+                os.makedirs(profile, exist_ok=True)
+                drivers.append(self.initialise_driver(profile))
+
+            # Fetch URLs concurrently
+            with ThreadPoolExecutor(max_workers=self.num_instances) as executor:
+                futures = {
+                    executor.submit(self.fetch_url, drivers[i % self.num_instances], url): url
+                    for i, url in enumerate(urls)
+                }
+                for future in as_completed(futures):
+                    url, html = future.result()
+                    results[url] = html  # Store the HTML content keyed by URL
+
+            return results
+
+        except Exception as e:
+            logger.error(f"Error during URL processing: {e}")
+            raise
+        finally:
+            # Close all drivers
+            for driver in drivers:
+                try:
                     driver.quit()
-
-     
-     async def scrape_urls_async(self, urls: List[str]) -> Dict[str, str]:
-        """
-        Concurrently scrapes multiple URLs using undetected_chromedriver.
-
-        Args:
-            urls (List[str]): List of URLs to scrape.
-
-        Returns:
-            Dict[str, str]: A dictionary mapping URLs to their scraped content.
-        """
-        # Directly call async scrape_url_async without ThreadPoolExecutor
-        tasks = [self.scrape_url_async(url) for url in urls]
-
-    # Await the results using asyncio.gather
-        results = await asyncio.gather(*tasks, return_exceptions=True)
-
-    # Map the results to URLs
-        return {url: result for url, result in zip(urls, results)}
-
-      
-         
-
-          
-          
-
-     
-
-      
-
-
-          
+                except Exception as e:
+                    logger.warning(f"Failed to close driver: {e}")
