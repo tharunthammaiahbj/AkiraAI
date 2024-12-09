@@ -14,16 +14,27 @@ class UndetectedChromeDriverScraper(ScraperFramework):
     A concrete implementation of the ScraperFramework using undetected_chromedriver.
     """
 
-    def __init__(self, num_instances: int, **kwargs):
+    def __init__(self, num_instances: int, headless: bool = True, retry_limit: int = 3, 
+             proxy_mode: str = "none", timeout: int = 30, **kwargs):
         """
         Initialize the scraper with instance count and other configuration.
 
         Args:
             num_instances (int): Number of Chrome driver instances to initialize.
+            headless (bool): Whether to run the scraper in headless mode (default True).
+            retry_limit (int): Number of retry attempts for failed requests (default 3).
+            proxy_mode (str): Mode of proxy configuration (default "none").
+            timeout (int): Timeout for requests or page loads (default 30).
             kwargs: Additional arguments passed to the parent class constructor.
         """
-        super().__init__(**kwargs)
+        # Pass the parent class parameters explicitly
+        super().__init__(headless=headless, retry_limit=retry_limit, proxy_mode=proxy_mode,
+                     timeout=timeout, **kwargs)
+    
+        # Initialize the child-specific parameters
         self.num_instances = num_instances
+
+
 
     def _configure_proxies(self) -> Optional[str]:
         """
