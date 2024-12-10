@@ -19,3 +19,6 @@ cache/
 #Ignore the logs directory
 logs/
 
+# Undetected_Chrome_Driver :
+
+chrome_profiles/
