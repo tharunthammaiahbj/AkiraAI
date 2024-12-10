@@ -20,7 +20,7 @@ async def main():
     scraper = PlaywrightAsyncScraper(max_concurrency=3)
 
     # Fetch the HTML content for the list of URLs
-    results = await scraper.process_urls_with_browsers(urls=urls)
+    results = await scraper.fetch_urls_with_browser(urls=urls)
 
     # Print the length of HTML content and URL for each result
     for url, html in results.items():

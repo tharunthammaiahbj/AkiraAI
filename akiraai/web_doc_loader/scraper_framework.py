@@ -72,8 +72,10 @@ class ScraperFramework(ABC):
                 logger.warning("No valid proxies found. Proceeding without proxy.")
         elif self.proxy_mode == "scrapedo":
             logger.info("Scrape.do proxy mode selected. Will use scrape_do_fetch for requests.")
+            return None
         elif self.proxy_mode == "none":
             logger.info("Proceeding without Proxy Configuration...")
-        return None
+            return None
+
 
 
