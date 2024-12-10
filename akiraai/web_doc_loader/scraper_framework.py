@@ -77,12 +77,3 @@ class ScraperFramework(ABC):
         return None
 
 
-    @abstractmethod
-    def initialise_driver(self) -> Any:
-        """
-        Abstract method to configure the web driver or API client.
-
-        Returns:
-            Configured driver or client instance.
-        """
-        pass
