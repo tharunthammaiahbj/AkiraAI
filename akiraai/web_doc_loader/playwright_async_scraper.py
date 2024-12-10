@@ -12,102 +12,75 @@ logger = get_logger("playwright-logger")
 class PlaywrightAsyncScraper(ScraperFramework):
 
     def __init__(self, headless=True, retry_limit=3, proxy_mode="none", timeout=30, max_concurrency=3, **kwargs):
-        """
-        Initializes the PlaywrightAsyncScraper with necessary configurations.
-        """
+
         super().__init__(headless, retry_limit, proxy_mode, timeout, **kwargs)
         self.max_concurrency = max_concurrency
-        logger.info(f"Initialized PlaywrightAsyncScraper with max_concurrency={self.max_concurrency}, headless={headless}, retry_limit={retry_limit}, proxy_mode={proxy_mode}, timeout={timeout}")
-
-    async def initialise_browser(self):
+        
+            
+    async def fetch_url(self, page, url, semaphore, timeout: int = 30):
         """
-        Initializes a Playwright browser instance and returns the browser and context.
-
-        Args:
-            headless (bool): Whether to launch the browser in headless mode.
-
-        Returns:
-            browser: An initialized Playwright browser instance.
-            context: A new browser context for managing pages.
+        Fetches the HTML content of a URL using the given page.
         """
-        logger.info("Initializing browser and context...")
-        proxy = self._configure_proxies()
-        async with async_playwright() as p:
-            logger.info("Launching Chromium browser...")
-            browser = await p.chromium.launch(headless=self.headless, proxy=proxy)
-            logger.info("Browser launched successfully.")
+        async with semaphore:
+            try:
+                logger.info(f"Page is fetching URL: {url}")
+                await page.goto(url, timeout=timeout * 1000)  # Timeout in milliseconds
+                html_content = await page.content()
+                logger.info(f"Page fetched URL: {url}")
+                return html_content
+            except Exception as e:
+                logger.error(f"Error fetching {url}: {e}")
+                return None
+            
 
-            logger.info("Creating new browser context...")
-            context = await browser.new_context()
-            logger.info("Browser context created successfully.")
-            return browser, context
 
-    async def fetch_urls_with_browser(self, urls: List[str], timeout: int = 30) -> Dict[str, Optional[str]]:
+    async def fetch_urls_with_browser(self, urls: List[str]) -> Dict[str, Optional[str]]:
         """
-        Processes a list of URLs with concurrency using Playwright and Malenia for undetected browsing.
-
-        Args:
-            urls (List[str]): List of URLs to fetch.
-            timeout (int): Timeout for page loads in seconds.
-
-        Returns:
-            dict: A dictionary mapping URLs to their HTML content.
+        Fetches multiple URLs concurrently using a shared browser and pages.
         """
         results: Dict[str, Optional[str]] = {}
+        semaphore = asyncio.Semaphore(self.max_concurrency)
 
-        logger.info(f"Starting to fetch {len(urls)} URLs with max_concurrency={self.max_concurrency} and timeout={timeout} seconds.")
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(headless=self.headless)
+            context = await browser.new_context()
+            await Malenia.apply_stealth(context=context)
 
-        # Initialize Playwright and browser context
-        pages = []  # Initialize pages here to prevent UnboundLocalError
-        try:
-            self.browser, self.context = await self.initialise_browser()
+            pages = [await context.new_page() for _ in range(self.max_concurrency)]
 
-            # Apply Malenia stealth to the context before creating pages
-            logger.info("Applying Malenia stealth mode...")
-            await Malenia.apply_stealth(self.context)
-            logger.info("Malenia stealth applied successfully.")
+            try:
+                # Assign tasks to pages
+                tasks = []
+                for i, url in enumerate(urls):
+                    tasks.append(self.fetch_url(pages[i % self.max_concurrency], url, semaphore, self.timeout))
 
-            # Create pages based on concurrency limit
-            logger.info(f"Creating {self.max_concurrency} pages based on concurrency limit...")
-            pages = [await self.context.new_page() for _ in range(self.max_concurrency)]
-            logger.info(f"{len(pages)} pages created.")
+                # Gather results
+                fetched_results = await asyncio.gather(*tasks)
 
-            # Create tasks to fetch URLs using the pages
-            semaphore = asyncio.Semaphore(self.max_concurrency)
+                # Map results to URLs
+                for url, html_content in zip(urls, fetched_results):
+                    results[url] = html_content
 
-            async def fetch_with_semaphore(page, url):
-                async with semaphore:
-                    try:
-                        logger.info(f"Fetching URL: {url} with page {page}")
-                        result = await self.fetch_url(page, url, timeout)
-                        logger.info(f"Successfully fetched {url}")
-                        return {url: result}
-                    except Exception as e:
-                        logger.error(f"Error fetching {url}: {e}")
-                        return {url: None}
+            except Exception as e:
+                logger.error(f"Error during URL fetch process: {e}")
 
-            # Assign URLs to pages and fetch concurrently
-            tasks = [fetch_with_semaphore(pages[i % self.max_concurrency], url) for i, url in enumerate(urls)]
-
-            # Gather results from all tasks concurrently
-            logger.info(f"Gathering results from {len(tasks)} fetch tasks concurrently...")
-            results_list = await asyncio.gather(*tasks)
-
-            # Combine results into a single dictionary
-            for result in results_list:
-                results.update(result)
-
-        except Exception as e:
-            logger.error(f"An error occurred during the fetch operation: {e}")
-        finally:
-            # Close all pages and the browser, checking that pages are initialized
-            if pages:
-                logger.info("Closing pages and browser...")
+            finally:
+                # Close all pages and browser
                 for page in pages:
                     await page.close()
-            if self.browser:
-                await self.browser.close()
-            logger.info("Browser and pages closed successfully.")
+                await browser.close()
 
-        logger.info(f"Completed fetching URLs. Returning {len(results)} results.")
         return results
+
+                
+
+
+
+        
+
+
+  
+
+        
+
+           
