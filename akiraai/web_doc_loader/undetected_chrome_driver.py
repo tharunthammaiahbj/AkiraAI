@@ -36,33 +36,6 @@ class UndetectedChromeDriverScraper(ScraperFramework):
 
 
 
-    def _configure_proxies(self) -> Optional[str]:
-        """
-        Configures proxy management based on the selected proxy_mode.
-        """
-        if self.proxy_mode == "freeproxy":
-            logger.info("Freeproxy mode selected. Configuring a random free proxy.")
-            proxy_filter = {
-                "anonymous": True,
-                "country_preference_set": None,
-                "outside_search": True,
-                "proxy_count": 5,
-                "secure": False,
-                "time_out": 5,
-            }
-            proxy_fetcher = ProxyFetcher(proxy_filter=proxy_filter)
-            proxy_list = proxy_fetcher.validated_proxy_list()
-            if proxy_list:
-                random_proxy = random.choice(proxy_list)
-                return random_proxy
-            else:
-                logger.warning("No valid proxies found. Proceeding without proxy.")
-        elif self.proxy_mode == "scrapedo":
-            logger.info("Scrape.do proxy mode selected. Will use scrape_do_fetch for requests.")
-        elif self.proxy_mode == "none":
-            logger.info("Proceeding without Proxy Configuration...")
-        return None
-
     def initialise_driver(self, profile_path: str) -> Chrome:
         """
         Configures and returns an instance of the Chrome driver with optional proxy settings.
@@ -113,6 +86,7 @@ class UndetectedChromeDriverScraper(ScraperFramework):
         try:
             # Initialize drivers
             for profile in profiles:
+                logger.info("Initialising Chrome Driver ...")
                 os.makedirs(profile, exist_ok=True)
                 drivers.append(self.initialise_driver(profile))
 

@@ -1,7 +1,14 @@
+import random
 from abc import ABC, abstractmethod
-from typing import List, Optional, Dict, Any
-from akiraai.utils.proxy_rotation import ProxyFilter, ProxyFetcher
-from concurrent.futures import ThreadPoolExecutor
+from typing import Optional, Any
+from akiraai.utils.logging import get_logger
+from akiraai.utils.proxy_rotation import ProxyFetcher,ProxyFilter
+
+
+
+
+logger = get_logger("scraper-framework-logger")
+
 
 class ScraperFramework(ABC):
     """
@@ -40,6 +47,34 @@ class ScraperFramework(ABC):
         self.timeout = timeout
         self.proxy_mode = proxy_mode
         self.config = kwargs
+    
+
+    def _configure_proxies(self) -> Optional[str]:
+        """
+        Configures proxy management based on the selected proxy_mode.
+        """
+        if self.proxy_mode == "freeproxy":
+            logger.info("Freeproxy mode selected. Configuring a random free proxy.")
+            proxy_filter : ProxyFilter = {
+                "anonymous": True,
+                "country_preference_set": None,
+                "outside_search": True,
+                "proxy_count": 5,
+                "secure": False,
+                "time_out": 5,
+            }
+            proxy_fetcher = ProxyFetcher(proxy_filter=proxy_filter)
+            proxy_list = proxy_fetcher.validated_proxy_list()
+            if proxy_list:
+                random_proxy = random.choice(proxy_list)
+                return random_proxy
+            else:
+                logger.warning("No valid proxies found. Proceeding without proxy.")
+        elif self.proxy_mode == "scrapedo":
+            logger.info("Scrape.do proxy mode selected. Will use scrape_do_fetch for requests.")
+        elif self.proxy_mode == "none":
+            logger.info("Proceeding without Proxy Configuration...")
+        return None
 
 
     @abstractmethod
