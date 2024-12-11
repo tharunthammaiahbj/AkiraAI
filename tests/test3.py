@@ -10,7 +10,7 @@ def main():
     base_url = "https://www.amazon.in/gp/bestsellers/?ref_=nav_cs_bestsellers"
 
 
-    with open("/workspaces/AkiraAI/output.html", "r", encoding="utf-8") as file:
+    with open("/workspaces/AkiraAI/tests/html_samples/amazon/output1.html", "r", encoding="utf-8") as file:
         html_content = file.read()
 
     

@@ -5,8 +5,8 @@ from undetected_playwright import Malenia
 
 async def main():
 
-    url = "https://www.amazon.in/gp/bestsellers/?ref_=nav_cs_bestsellers"
-    output_file = "output.html"
+    url = "https://sale.alibaba.com/p/saving_spotlight/index.html?spm=a2700.product_home_newuser.scenario_overview.savingSpotlight&wx_navbar_transparent=true&path=/p/saving_spotlight/index.html&ncms_spm=a27aq.savings_spotlight&prefetchKey=met&wx_xpage=true&topOfferIds=1601138774129&categoryIds=15"
+    output_file = "output5.html"
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
