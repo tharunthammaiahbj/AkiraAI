@@ -1,29 +1,54 @@
-from akiraai.web_doc_loader.playwright_async_scraper import PlaywrightAsyncScraper
-import asyncio
-
-url_list = [
-    "https://en.wikipedia.org/wiki/Deaths_in_2024",
-    "https://www.amazon.in/gp/bestsellers/?ref_=nav_cs_bestsellers",
-    "https://www.amazon.in/gp/bestsellers/automotive/ref=zg_bs_nav_automotive_0",
-    "https://www.amazon.in/gp/bestsellers/automotive/5257482031/ref=zg_bs_nav_automotive_1",
-    "https://www.amazon.in/gp/bestsellers/automotive/5257605031/ref=zg_bs_nav_automotive_2_5257482031",
-    "https://www.amazon.in/gp/bestsellers/automotive/5257477031/ref=zg_bs_nav_automotive_1",
-    "https://www.amazon.in/gp/bestsellers/automotive/5257556031/ref=zg_bs_nav_automotive_2_5257477031",
-    "https://www.amazon.in/gp/bestsellers/automotive/51396100031/ref=zg_bs_nav_automotive_2_5257556031",
-    "https://www.amazon.in/gp/bestsellers/gift-cards/92070982031/ref=zg_bs_nav_gift-cards_1",
-    "https://www.amazon.in/gp/bestsellers/gift-cards/92070985031/ref=zg_bs_nav_gift-cards_1_92070982031"
-]
+from akiraai.utils.clean_up_html import cleanup_html
+from akiraai.utils.clean_up_html import reduce_html
 
 
-# Initialize scraper
-scraper = PlaywrightAsyncScraper(max_concurrency=3, timeout=30)
 
-# Fetch URLs
-results = asyncio.run(scraper.fetch_urls_with_browser(urls=url_list))
 
-# Print the URL and the HTML content length
-for url, html in results.items():
-    if html is not None:
-        print(f"URL: {url} - HTML Length: {len(html)}")
-    else:
-        print(f"URL: {url} - Failed to fetch content.")
+def main():
+
+    
+    base_url = "https://www.amazon.in/gp/bestsellers/?ref_=nav_cs_bestsellers"
+
+
+    with open("/workspaces/AkiraAI/output.html", "r", encoding="utf-8") as file:
+        html_content = file.read()
+
+    
+    try:
+        title, minimized_body, link_urls, image_urls = cleanup_html(html_content,base_url)
+
+        print("Title of the page: ")
+        print(title)
+
+        print("\nMinimised body content : ")
+        print(minimized_body)
+
+        print("\nLinks Found : ")
+        print(link_urls)
+
+        print("\nImages found:")
+        for img in image_urls:
+            print(img)
+
+    except ValueError as e:
+        print(f"Error during HTML cleanup: {e}")
+
+
+    reduction_level = 2 
+
+    reduced_html = reduce_html(html=html_content, reduction=reduction_level)
+
+    print("\nReduced HTML content:")
+    print(reduced_html)
+
+
+    reduced_file = "reduced.html"
+
+    with open(reduced_file,"w",encoding="utf-8") as file:
+        file.write(reduced_html)
+
+    print(f"\nReduced HTML content saved to {reduced_file}")
+
+main()
+
+
