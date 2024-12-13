@@ -34,7 +34,7 @@ def main():
         print(f"Error during HTML cleanup: {e}")
 
 
-    reduction_level = 2 
+    reduction_level = 1
 
     reduced_html = reduce_html(html=html_content, reduction=reduction_level)
 
