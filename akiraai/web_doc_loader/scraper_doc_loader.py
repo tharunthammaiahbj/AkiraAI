@@ -35,7 +35,21 @@ class ScraperDocLoader(BaseLoader):
             except Exception as e:
                 cleaned_html_dict[url] = f"Error processing HTML for {url}: {e}"
 
-        return cleaned_html_dict        
+        return cleaned_html_dict
+
+
+    def html_to_doc(cleaned_html_dict:Dict[str, str]) -> Dict[str, Document]:
+        """
+        Converts the cleaned HTML dictionary to LangChain Documents incrementally.
+
+        Args:
+            cleaned_html_dict (dict): Dictionary with cleaned HTML content where keys are URLs.
+
+        Returns:
+            dict :  
+        """
+        
+                
 
          
          
