@@ -5,7 +5,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from akiraai.web_doc_loader.scraper_framework import ScraperFramework
 from undetected_chromedriver import Chrome, ChromeOptions
 from akiraai.utils.logging import get_logger
-from akiraai.utils.proxy_rotation import ProxyFetcher, ProxyFilter
 
 logger = get_logger(name="undetected_chrome_driver_logger")
 
