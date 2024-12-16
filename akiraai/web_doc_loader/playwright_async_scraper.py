@@ -1,9 +1,13 @@
 import asyncio
-from akiraai.web_doc_loader.scraper_framework import ScraperFramework
+from typing import AsyncIterator
+from langchain_core.documents import Document
 from playwright.async_api import async_playwright
 from undetected_playwright import Malenia
 from typing import Dict, Optional, List
 from akiraai.utils.logging import get_logger
+from akiraai.web_doc_loader.scraper_framework import ScraperFramework
+from akiraai.utils.langchain_doc_converter import doc_converter
+from akiraai.utils.clean_up_html import reduce_html
 
 
 logger = get_logger("playwright-logger")
@@ -34,7 +38,7 @@ class PlaywrightAsyncScraper(ScraperFramework):
             
 
 
-    async def fetch_urls_with_browser(self, urls: List[str]) -> Dict[str, Optional[str]]:
+    async def fetch_urls_with_browser(self, urls: List[str]) ->AsyncIterator[Document]:
         """
         Fetches multiple URLs concurrently using a shared browser and pages.
         """
@@ -58,8 +62,11 @@ class PlaywrightAsyncScraper(ScraperFramework):
                 fetched_results = await asyncio.gather(*tasks)
 
                 # Map results to URLs
-                for url, html_content in zip(urls, fetched_results):
-                    results[url] = html_content
+                for url, html_content in zip(urls, fetched_results):    
+                    if html_content:
+                        cleaned_html = reduce_html(html=html_content, reduction=1)
+                        doc = doc_converter(url=url, cleaned_html=cleaned_html)
+                        yield doc
 
             except Exception as e:
                 logger.error(f"Error during URL fetch process: {e}")
@@ -69,8 +76,6 @@ class PlaywrightAsyncScraper(ScraperFramework):
                 for page in pages:
                     await page.close()
                 await browser.close()
-
-        return results
 
 
 

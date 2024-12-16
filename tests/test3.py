@@ -1,54 +1,31 @@
-from akiraai.utils.clean_up_html import cleanup_html
-from akiraai.utils.clean_up_html import reduce_html
+from akiraai.web_doc_loader.undetected_chrome_driver import UndetectedChromeDriverScraper
 
+# Define test URLs
+url_list = [
+    "https://en.wikipedia.org/wiki/Deaths_in_2024",
+    "https://www.amazon.in/gp/bestsellers/?ref_=nav_cs_bestsellers",
+    "https://www.amazon.in/gp/bestsellers/automotive/ref=zg_bs_nav_automotive_0",
+    "https://www.amazon.in/gp/bestsellers/automotive/5257482031/ref=zg_bs_nav_automotive_1",
+    "https://www.amazon.in/gp/bestsellers/automotive/5257605031/ref=zg_bs_nav_automotive_2_5257482031",
+    "https://www.amazon.in/gp/bestsellers/automotive/5257477031/ref=zg_bs_nav_automotive_1",
+    "https://www.amazon.in/gp/bestsellers/automotive/5257556031/ref=zg_bs_nav_automotive_2_5257477031",
+    "https://www.amazon.in/gp/bestsellers/automotive/51396100031/ref=zg_bs_nav_automotive_2_5257556031",
+    "https://www.amazon.in/gp/bestsellers/gift-cards/92070982031/ref=zg_bs_nav_gift-cards_1",
+    "https://www.amazon.in/gp/bestsellers/gift-cards/92070985031/ref=zg_bs_nav_gift-cards_1_92070982031"
+]
 
+# Initialize the scraper
+scraper = UndetectedChromeDriverScraper(num_instances=3)
 
+# Define a function to fetch URLs and print the results
+def test_scraper():
+    # Call the method that scrapes the URLs
+    for doc in scraper.process_urls_with_drivers(urls=url_list):
+        # For each document, print the URL, title, and content length
+        print(f"Document URL: {doc.metadata['source']}")
+        print(f"Title: {doc.metadata['title']}")
+        print(f"Content Length: {len(doc.page_content)}")
+        print('-' * 50)
 
-def main():
-
-    
-    base_url = "https://www.amazon.in/gp/bestsellers/?ref_=nav_cs_bestsellers"
-
-
-    with open("/workspaces/AkiraAI/tests/html_samples/amazon/output1.html", "r", encoding="utf-8") as file:
-        html_content = file.read()
-
-    
-    try:
-        title, minimized_body, link_urls, image_urls = cleanup_html(html_content,base_url)
-
-        print("Title of the page: ")
-        print(title)
-
-        print("\nMinimised body content : ")
-        print(minimized_body)
-
-        print("\nLinks Found : ")
-        print(link_urls)
-
-        print("\nImages found:")
-        for img in image_urls:
-            print(img)
-
-    except ValueError as e:
-        print(f"Error during HTML cleanup: {e}")
-
-
-    reduction_level = 1
-
-    reduced_html = reduce_html(html=html_content, reduction=reduction_level)
-
-    print("\nReduced HTML content:")
-    print(reduced_html)
-
-
-    reduced_file = "reduced.html"
-
-    with open(reduced_file,"w",encoding="utf-8") as file:
-        file.write(reduced_html)
-
-    print(f"\nReduced HTML content saved to {reduced_file}")
-
-main()
-
-
+# Run the test
+test_scraper()

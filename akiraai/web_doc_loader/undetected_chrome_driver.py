@@ -1,10 +1,13 @@
-import random
 import os
+from akiraai.utils.logging import get_logger
+from langchain_core.documents import Document
 from typing import Optional, List, Dict
+from undetected_chromedriver import Chrome, ChromeOptions
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from akiraai.web_doc_loader.scraper_framework import ScraperFramework
-from undetected_chromedriver import Chrome, ChromeOptions
-from akiraai.utils.logging import get_logger
+from akiraai.utils.langchain_doc_converter import doc_converter
+from akiraai.utils.clean_up_html import reduce_html
+
 
 logger = get_logger(name="undetected_chrome_driver_logger")
 
@@ -71,7 +74,7 @@ class UndetectedChromeDriverScraper(ScraperFramework):
             logger.error(f"Error fetching {url}: {e}")
             return url, None
 
-    def process_urls_with_drivers(self, urls: List[str]) -> Dict[str, Optional[str]]:
+    def process_urls_with_drivers(self, urls: List[str]):
         """
         Processes a list of URLs using multiple Chrome drivers initialized with profiles.
         Returns a dictionary mapping URLs to their HTML content.
@@ -97,9 +100,10 @@ class UndetectedChromeDriverScraper(ScraperFramework):
                 }
                 for future in as_completed(futures):
                     url, html = future.result()
-                    results[url] = html  # Store the HTML content keyed by URL
-
-            return results
+                    if html:
+                        cleaned_html = reduce_html(html=html, reduction=1)
+                        doc = doc_converter(url=url , cleaned_html=cleaned_html)
+                        yield doc
 
         except Exception as e:
             logger.error(f"Error during URL processing: {e}")
