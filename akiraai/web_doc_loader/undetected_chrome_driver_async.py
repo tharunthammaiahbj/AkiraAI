@@ -56,6 +56,7 @@ class UndetectedChromeDriverScraper(ScraperFramework):
             logger.info(f"Proxy configured: {proxy}")
 
         try:
+            #If there is an initialisation or max() sequence error , put this to false, run it and then put it to true .
             return Chrome(options=options, user_multi_procs=True)
         except Exception as e:
             logger.error(f"Failed to Configure the Chrome Driver: {e}")
@@ -83,7 +84,6 @@ class UndetectedChromeDriverScraper(ScraperFramework):
         profile_base_dir = "./chrome_profiles"
         profiles = [os.path.join(profile_base_dir, f"profile_{i}") for i in range(self.num_instances)]
         drivers = []
-        results: Dict[str, Optional[str]] = {}
 
         try:
             # Initialize drivers

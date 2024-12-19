@@ -1,18 +1,32 @@
-from vertexai.preview.tokenization import get_tokenizer_for_model
-import re
+import os
+from akiraai.web_doc_loader.undetected_chrome_driver_async import UndetectedChromeDriverScraper
 
-def count_tokens_gemini(html_content):
+def main():
+    scraper = UndetectedChromeDriverScraper(num_instances=3)
 
-    tokenizer =get_tokenizer_for_model("gemini-1.5-flash-002")
+    urls = [
+        "https://en.wikipedia.org/wiki/Deaths_in_2024",
+        "https://www.amazon.in/gp/bestsellers/?ref_=nav_cs_bestsellers",
+        "https://www.amazon.in/gp/bestsellers/automotive/ref=zg_bs_nav_automotive_0",
+        "https://www.amazon.in/gp/bestsellers/automotive/5257482031/ref=zg_bs_nav_automotive_1",
+        "https://www.amazon.in/gp/bestsellers/automotive/5257605031/ref=zg_bs_nav_automotive_2_5257482031",
+        "https://www.amazon.in/gp/bestsellers/automotive/5257477031/ref=zg_bs_nav_automotive_1",
+        "https://www.amazon.in/gp/bestsellers/automotive/5257556031/ref=zg_bs_nav_automotive_2_5257477031",
+        "https://www.amazon.in/gp/bestsellers/automotive/51396100031/ref=zg_bs_nav_automotive_2_5257556031",
+        "https://www.amazon.in/gp/bestsellers/gift-cards/92070982031/ref=zg_bs_nav_gift-cards_1",
+        "https://www.amazon.in/gp/bestsellers/gift-cards/92070985031/ref=zg_bs_nav_gift-cards_1_92070982031"
+    ]
 
-    response = tokenizer.count_tokens(html_content)
+    # Get the results synchronously
+    results = scraper.process_urls_with_drivers(urls)
 
-    return response.total_tokens
-    
+    # Print the results
+    for doc in scraper.process_urls_with_drivers(urls):
+        if doc:  # If doc is not None
+            print(f"Success: {doc.metadata['source']} - Length: {len(doc.page_content)}")
+        else:
+            print(f"Failed: {doc.metadata['source']}")
 
-with open("/workspaces/AkiraAI/scraped_content.html","r") as file:
-    html_contents = file.read()
-
-tokens = count_tokens_gemini(html_content=html_contents)
-
-print(f"The number of tokens are : {tokens}")
+# Run the main function
+if __name__ == "__main__":
+    main()
