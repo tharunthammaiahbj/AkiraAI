@@ -1,6 +1,6 @@
 from akiraai.web_doc_loader.scrape_do import scrape_do_fetch
 from akiraai.web_doc_loader.playwright_async_scraper import PlaywrightAsyncScraper
-from akiraai.web_doc_loader.undetected_chrome_driver_async import UndetectedChromeDriverScraper
+from akiraai.web_doc_loader.undetected_chrome_driver_async_scraper import UndetectedChromeDriverScraper
 from akiraai.web_doc_loader.scraper_framework import ScraperFramework
 
 
