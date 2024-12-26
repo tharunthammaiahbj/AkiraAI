@@ -24,12 +24,18 @@ def calculate_tokens(html_content:str, model_id: str) -> int:
         print(f"Error: {e}")
         return 0
 
+"""
 if __name__ == "__main__":
     # Example usage
-    text = "This is an example sentence to calculate token count."
+
+    with open("/workspaces/AkiraAI/scraped_content.html","r") as file:
+        html_content = file.read()
+
+    text = html_content
     model_id = "jinaai/reader-lm-0.5b"  # Replace with your model ID
     
     token_count = calculate_tokens(text, model_id)
     print(f"Token count for the input text: {token_count}")
+"""
 
 

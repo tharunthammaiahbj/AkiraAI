@@ -61,3 +61,11 @@ RUN mkdir -p /home/vscode/.cache/ms-playwright && \
 
 # Set environment variables
 ENV PYTHONPATH=/workspace/AkiraAI
+
+# Set a writable cache directory for Hugging Face
+# Set the environment variable for the cache
+ENV HF_HOME=/home/vscode/.cache/huggingface/hub
+
+# Ensure the directory exists and is writable
+RUN mkdir -p /home/vscode/.cache/huggingface/hub && \
+    chown -R vscode:vscode /home/vscode/.cache/huggingface
