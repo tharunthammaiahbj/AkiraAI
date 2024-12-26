@@ -1,3 +1,7 @@
+"""
+__init__.py for utils folder
+"""
+
 from akiraai.utils.proxy_rotation import (
     ProxyFilter,
     ProxyFetcher
