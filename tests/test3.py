@@ -1,4 +1,5 @@
 import asyncio
+import os
 from akiraai.web_doc_loader.playwright_async_scraper import PlaywrightAsyncScraper
 
 url_list = [
@@ -18,11 +19,26 @@ url_list = [
 scraper = PlaywrightAsyncScraper(max_concurrency=3, timeout=30)
 
 async def test_scraper():
+    # Create a directory to store the HTML files
+    os.makedirs("html_files", exist_ok=True)
+
+    file_counter = 1  # Start the file naming with 1
+
     # Fetch URLs and handle the results
     async for doc in scraper.fetch_urls_with_browser(urls=url_list):
-        url = doc.metadata.get("source")
         html_content = doc.page_content
-        print(f"URL: {url} - HTML Length: {len(html_content)}" if html_content else f"URL: {url} - Failed to fetch content.")
+
+        if html_content:
+            # Simple incremental filename
+            filename = os.path.join("html_files", f"page_{file_counter}.html")
+            file_counter += 1
+
+            # Save the HTML content to the file
+            with open(filename, "w", encoding="utf-8") as f:
+                f.write(html_content)
+            print(f"Saved: {filename}")
+        else:
+            print(f"Failed to fetch content for one of the URLs.")
 
 # Run the test
 asyncio.run(test_scraper())
