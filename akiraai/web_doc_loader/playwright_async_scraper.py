@@ -28,7 +28,7 @@ class PlaywrightAsyncScraper(ScraperFramework):
         async with semaphore:
             try:
                 logger.info(f"Page is fetching URL: {url}")
-                await page.goto(url, timeout=timeout * 1000)  # Timeout in milliseconds
+                await page.goto(url, timeout=timeout * 1000, wait_until ="domcontentloaded" )  # Timeout in milliseconds
                 html_content = await page.content()
                 logger.info(f"Page fetched URL: {url}")
                 return html_content
