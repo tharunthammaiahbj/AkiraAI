@@ -4,8 +4,7 @@ from akiraai.web_doc_loader.playwright_async_scraper import PlaywrightAsyncScrap
 from markdownify import markdownify as md 
 
 url_list = [
-
-    
+   
 ]
 
 # Initialize the scraper
@@ -13,9 +12,9 @@ scraper = PlaywrightAsyncScraper(max_concurrency=3, timeout=30)
 
 async def test_scraper():
     # Create a directory to store the markdown files
-    os.makedirs("/workspaces/AkiraAI/Dataset/Summarization/input_markdown", exist_ok=True)
+    os.makedirs("/workspaces/AkiraAI/Dataset/Summarization/input_markdown/input_raw_markdown", exist_ok=True)
 
-    file_counter = 108  # Start the file naming with 1
+    file_counter = 154  # Start the file naming with 1
 
     # Fetch URLs and handle the results
     async for doc in scraper.fetch_urls_with_browser(urls=url_list):
@@ -26,7 +25,7 @@ async def test_scraper():
             markdown_content = md(html_content)
 
             # Simple incremental filename
-            filename = os.path.join("/workspaces/AkiraAI/Dataset/Summarization/input_markdown", f"page_{file_counter}.md")
+            filename = os.path.join("/workspaces/AkiraAI/Dataset/Summarization/input_markdown/input_raw_markdown", f"page_{file_counter}.md")
             file_counter += 1
 
             # Save the markdown content to the file
