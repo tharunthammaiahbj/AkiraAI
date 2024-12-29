@@ -5,11 +5,18 @@ def scrape_jina_ai(url:str)->str:
   response.raise_for_status()
   return response.text
 
-url = "https://en.wikipedia.org/wiki/Orange"
+url_list = [
+  
+]
 
-markdown_content = scrape_jina_ai(url=url)
+for url in url_list:
 
-print(markdown_content)
+  file_counter = 6
+  markdown_content = scrape_jina_ai(url=url)
+  with open(f"/workspaces/AkiraAI/Dataset/Summarization/input_markdown/input_processed_markdown/processed_{file_counter}.md","w") as file:
+    file.write(markdown_content)
+    print("Saved the markdown")
+
 
 
 
