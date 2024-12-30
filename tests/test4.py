@@ -6,14 +6,14 @@ def scrape_jina_ai(url:str)->str:
   return response.text
 
 url_list = [
-    "https://sale.alibaba.com/p/rank/detail.html?spm=a27aq.rank_detail.6622646540.32.50c243bfiwWgnu&wx_navbar_transparent=true&cardType=101002747&cardId=201334614&topOfferIds=&templateBusinessCode=&bucket=undefined"
+    "https://www.ebay.com/b/Industrial-Threadlockers/184326/bn_78213224"
 ]
 
 for url in url_list:
 
-  file_counter = 11
+  file_counter = 50
   markdown_content = scrape_jina_ai(url=url)
-  with open(f"/workspaces/AkiraAI/Dataset/Summarization/input_markdown/raw_markdown/e-commerce/alibaba/ali_{file_counter}.md","w") as file:
+  with open(f"/workspaces/AkiraAI/Dataset/Summarization/input_markdown/raw_markdown/e-commerce/ebay/ebay_{file_counter}.md","w") as file:
     file.write(markdown_content)
     print("Saved the markdown")
 
