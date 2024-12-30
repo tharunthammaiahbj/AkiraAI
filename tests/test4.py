@@ -6,14 +6,15 @@ def scrape_jina_ai(url:str)->str:
   return response.text
 
 url_list = [
-  
+   
+
 ]
 
 for url in url_list:
 
-  file_counter = 6
+  file_counter = 43
   markdown_content = scrape_jina_ai(url=url)
-  with open(f"/workspaces/AkiraAI/Dataset/Summarization/input_markdown/input_processed_markdown/processed_{file_counter}.md","w") as file:
+  with open(f"/workspaces/AkiraAI/Dataset/Summarization/input_markdown/raw_markdown/e-commerce/com_{file_counter}.md","w") as file:
     file.write(markdown_content)
     print("Saved the markdown")
 

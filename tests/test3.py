@@ -4,7 +4,7 @@ from akiraai.web_doc_loader.playwright_async_scraper import PlaywrightAsyncScrap
 from markdownify import markdownify as md 
 
 url_list = [
- "https://www.walmart.com/browse/womens-clothing/5438_133162?povid=ApparelNav_APPAREL_FLP_CP_Hubspokes_Cat_Womens"
+ "https://www.walmart.com/browse/sports-outdoors/sports-recovery-injury-prevention/4125_4134_3523130?povid=HDL_SportsOutdoors_4134_Hubspoke_Shopbysport_Recovery_DSK_Dec_24"
  
 ]
 
@@ -15,7 +15,7 @@ async def test_scraper():
     # Create a directory to store the markdown files
     os.makedirs("/workspaces/AkiraAI/Dataset/Summarization/input_markdown/raw_markdown/e-commerce", exist_ok=True)
 
-    file_counter =27   # Start the file naming with 1
+    file_counter =43   # Start the file naming with 1
 
     # Fetch URLs and handle the results
     async for doc in scraper.fetch_urls_with_browser(urls=url_list):
