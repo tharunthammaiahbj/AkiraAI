@@ -9,7 +9,7 @@ url_list = [
     "https://www.ebay.com/b/Industrial-Threadlockers/184326/bn_78213224"
 ]
 
-for url in url_list:
+for url in url_list:  
 
   file_counter = 50
   markdown_content = scrape_jina_ai(url=url)
