@@ -1,0 +1,145 @@
+TITLE: Startup’s autonomous drones precisely track warehouse inventories
+
+SOURCE: MIT News | Massachusetts Institute of Technology (http://web.mit.edu)
+
+ABSTRACT: Corvus Robotics, founded by Mohammed Kabir ’21, is using drones that can navigate in GPS-denied environments to expedite inventory management.
+
+AUTHORS: Zach Winn | MIT News
+
+PUBLICATION DATE: December 20, 2024
+
+BODY:
+
+INTRODUCTION:
+Whether you’re a fulfillment center, a manufacturer, or a distributor, speed is king. But getting products out the door quickly requires workers to know where those products are located in their warehouses at all times. That may sound obvious, but lost or misplaced inventory is a major problem in warehouses around the world.
+
+CORVUS ROBOTICS:
+Corvus Robotics is addressing that problem with an inventory management platform that uses autonomous drones to scan the towering rows of pallets that fill most warehouses. The company’s drones can work 24/7, whether warehouse lights are on or off, scanning barcodes alongside human workers to give them an unprecedented view of their products.
+
+“Typically, warehouses will do inventory twice a year — we change that to once a week or faster,” says Corvus co-founder and CTO Mohammed Kabir ’21. “There’s a huge operational efficiency you gain from that.”
+
+Corvus is already helping distributors, logistics providers, manufacturers, and grocers track their inventory. Through that work, the company has helped customers realize huge gains in the efficiency and speed of their warehouses.
+
+The key to Corvus’s success has been building a drone platform that can operate autonomously in tough environments like warehouses, where GPS doesn’t work and Wi-Fi may be weak, by only using cameras and neural networks to navigate. With that capability, the company believes its drones are poised to enable a new level of precision for the way products are produced and stored in warehouses around the world.
+
+A NEW KIND OF INVENTORY MANAGEMENT SOLUTION:
+Kabir has been working on drones since he was 14.
+
+“I was interested in drones before the drone industry even existed,” Kabir says. “I’d work with people I found on the internet. At the time, it was just a bunch of hobbyists cobbling things together to see if they could work.”
+
+In 2017, the same year Kabir came to MIT, he received a message from his eventual Corvus co-founder Jackie Wu, who was a student at Northwestern University at the time. Wu had seen some of Kabir’s work on drone navigation in GPS-denied environments as part of an open-source drone project. The students decided to see if they could use the work as the foundation for a company.
+
+Kabir started working on spare nights and weekends as he juggled building Corvus’ technology with his coursework in MIT’s Department of Aeronautics and Astronautics. The founders initially tried using off-the-shelf drones and equipping them with sensors and computing power. Eventually they realized they had to design their drones from scratch, because off-the-shelf drones did not provide the kind of low-level control and access they needed to build full-lifecycle autonomy.
+
+Kabir built the first drone prototype in his dorm room in Simmons Hall and took to flying each new iteration in the field out front.
+
+“We’d build these drone prototypes and bring them out to see if they’d even fly, and then we’d go back inside and start building our autonomy systems on top of them,” Kabir recalls.
+
+While working on Corvus, Kabir was also one of the founders of the MIT Driverless program that built North America’s first competition-winning driverless race cars.
+
+“It’s all part of the same autonomy story,” Kabir says. “I’ve always been very interested in building robots that operate without a human touch.”
+
+From the beginning, the founders believed inventory management was a promising application for their drone technology. Eventually they rented a facility in Boston and simulated a warehouse with huge racks and boxes to refine their technology.
+
+By the time Kabir graduated in 2021, Corvus had completed several pilots with customers. One customer was MSI, a building materials company that distributes flooring, countertops, tile, and more. Soon MSI was using Corvus every day across multiple facilities in its nationwide network.
+
+The Corvus One drone, which the company calls the world’s first fully autonomous warehouse inventory management drone, is equipped with 14 cameras and an AI system that allows it to safely navigate to scan barcodes and record the location of each product. In most instances, the collected data are shared with the customer’s warehouse management system (typically the warehouse’s system of record), and any discrepancies identified are automatically categorized with a suggested resolution. Additionally, the Corvus interface allows customers to select no-fly zones, choose flight behaviors, and set automated flight schedules.
+
+“When we started, we didn’t know if lifelong vision-based autonomy in warehouses was even possible,” Kabir says. “It turns out that it’s really hard to make infrastructure-free autonomy work with traditional computer vision techniques. We were the first in the world to ship a learning-based autonomy stack for an indoor aerial robot using machine learning and neural network based approaches. We were using AI before it was cool.”
+
+To set up, Corvus’ team simply installs one or more docks, which act as a charging and data transfer station, on the ends of product racks and completes a rough mapping step using tape measurers. The drones then fill in the fine details on their own. Kabir says it takes about a week to be fully operational in a 1-million-square-foot facility.
+
+“We don’t have to set up any stickers, reflectors, or beacons,” Kabir says. “Our setup is really fast compared to other options in the industry. We call it infrastructure-free autonomy, and it’s a big differentiator for us.”
+
+FROM FORKLIFTS TO DRONES:
+A lot of inventory management today is done by a person using a forklift or a scissor lift to scan barcodes and make notes on a clipboard. The result is infrequent and inaccurate inventory checks that sometimes require warehouses to shut down operations.
+
+“They’re going up and down on these lifts, and there are all of these manual steps involved,” Kabir says. “You have to manually collect data, then there’s a data entry step, because none of these systems are connected. What we’ve found is many warehouses are driven by bad data, and there’s no way to fix that unless you fix the data you’re collecting in the first place.”
+
+Corvus can bring inventory management systems and processes together. Its drones also operate safely around people and forklifts every day.
+
+“That was a core goal for us,” Kabir says. “When we go into a warehouse, it’s a privilege the customer has given us. We don’t want to disrupt their operations, and we build a system around that idea. You can fly it whenever you need to, and the system will work around your schedule.”
+
+Kabir already believes Corvus offers the most comprehensive inventory management solution available. Moving forward, the company will offer more end-to-end solutions to manage inventory the moment it arrives at warehouses.
+
+“Drones actually only solve a part of the inventory problem,” Kabir says. “Drones fly around to track rack pallet inventory, but a lot of stuff gets lost even before it makes it to the racks. Products arrive, they get taken off a truck, and then they are stacked on the floor, and before they are moved to the racks, items have been lost. They’re mislabelled, they’re misplaced, and they’re just gone. Our vision is to solve that.”
+
+RELATED LINKS:
+Corvus Robotics (https://www.corvus-robotics.com/)
+Department of Aeronautics and Astronautics (https://aeroastro.mit.edu/)
+School of Engineering (https://engineering.mit.edu/)
+
+RELATED TOPICS:
+Innovation and Entrepreneurship (I&E) (/topic/innovation)
+Startups (/topic/startups)
+Alumni/ae (/topic/alumni)
+Drones (/topic/drones)
+Aeronautical and astronautical engineering (/topic/aeronautics)
+Artificial intelligence (/topic/artificial-intelligence2)
+Autonomous vehicles (/topic/autonomous-vehicles)
+School of Engineering (/topic/school-engineering)
+
+RELATED ARTICLES:
+A launchpad for entrepreneurship in aerospace (/2024/launchpad-entrepreneurship-aerospace-1115)
+Flying high to enable sustainable delivery, remote care (/2024/flying-high-enable-sustainable-delivery-remote-care-0725)
+Optimizing solar farms with smart drones (/2019/raptor-maps-solar-drone-software-0130)
+
+MORE MIT NEWS:
+MIT’s top research stories of 2024 (/2024/mits-top-research-stories-1224)
+MIT community in 2024: A year in review (/2024/mit-community-year-review-1224)
+MIT in the media: 2024 in review (/2024/mit-media-review-1224)
+Celebrating the opening of the new Graduate Junction residence (/2024/celebrating-graduate-junction-residence-1223)
+Bacteria in the human gut rarely update their CRISPR defense systems (/2024/human-gut-bacteria-rarely-update-their-crispr-defense-systems-1223)
+Why open secrets are a big problem (/2024/why-open-secrets-are-a-big-problem-1223)
+
+ABOUT MIT NEWS:
+This website is managed by the MIT News Office, part of the Institute Office of Communications.
+
+NEWS BY SCHOOLS/COLLEGE:
+School of Architecture and Planning (/school/architecture-and-planning)
+School of Engineering (/school/engineering)
+School of Humanities, Arts, and Social Sciences (/school/humanities-arts-and-social-sciences)
+MIT Sloan School of Management (/school/management)
+School of Science (/school/science)
+MIT Schwarzman College of Computing (/school/mit-schwarzman-college-computing)
+
+RESOURCES:
+About the MIT News Office (/mit-news-office/about)
+MIT News Press Center (/press)
+Terms of Use (/terms-of-use)
+Press Inquiries (/press/inquiries)
+Filming Guidelines (/press/filming-guidelines)
+RSS Feeds (/rss)
+
+TOOLS:
+Subscribe to MIT Daily/Weekly (http://web.mit.edu/mit-daily-weekly/)
+Subscribe to press releases (/press/subscribe-to-press-releases)
+Submit campus news (/user/login?destination=news-submission)
+Guidelines for campus news contributors (/resources-for-campus-news-contributors)
+Guidelines on generative AI (/guidelines-generative-ai)
+
+MIT TOP LEVEL LINKS:
+Education (http://web.mit.edu/education)
+Research (http://web.mit.edu/research)
+Innovation (http://web.mit.edu/innovation)
+Admissions + Aid (http://web.mit.edu/admissions-aid)
+Campus Life (http://web.mit.edu/campus-life)
+News (/)
+Alumni (http://web.mit.edu/alumni)
+About MIT (http://web.mit.edu/about)
+Join us in building a better world. (http://web.mit.edu/building-a-better-world/)
+
+RECOMMENDED LINKS:
+Visit (http://web.mit.edu/visitmit)
+Map (opens in new window) (http://whereis.mit.edu/)
+Events (opens in new window) (http://calendar.mit.edu/)
+People (opens in new window) (http://web.mit.edu/people.html)
+Careers (opens in new window) (http://careers.mit.edu/)
+Contact (http://web.mit.edu/contact)
+Privacy (http://web.mit.edu/privacy)
+Accessibility (http://web.mit.edu/accessibility)
+Social Media Hub (http://socialmediahub.mit.edu)
+MIT on X (https://twitter.com/mit)
+MIT on Facebook (https://www.facebook.com/MITnews)
+MIT on YouTube (https://www.youtube.com/mit)
+MIT on Instagram (https://www.instagram.com/mit)

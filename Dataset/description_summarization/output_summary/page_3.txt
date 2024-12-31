@@ -1,0 +1,33 @@
+TITLE: Ordnance Survey: Navigating the role of AI and ethical considerations in geospatial technology
+
+AUTHOR: Duncan MacRae
+
+DATE: December 23, 2024
+
+SOURCE: AI News (https://www.artificialintelligence-news.com/news/ordnance-survey-navigating-the-role-of-ai-and-ethical-considerations-in-geospatial-technology/)
+
+SUMMARY:
+- Manish Jethwa, CTO at Ordnance Survey (OS), discusses the potential of AI and machine learning (ML) in geospatial technology.
+- Key benefits include:
+    * Automatic feature extraction from imagery
+    * Easier data query using natural language
+    * Increased accessibility of geospatial data
+- Challenges include:
+    * Ethical considerations (bias, transparency)
+    * Cybersecurity threats
+    * Cultural resistance and change fatigue
+- Importance of responsible AI development and workforce training is emphasized.
+
+KEY POINTS:
+- Advancements in AI and ML, particularly large language models (LLMs), will make geospatial datasets more user-friendly.
+- Increased access to graphics processing units (GPUs) will enable training models for complex tasks.
+- Ordnance Survey (OS) has a Responsible AI Charter to guide ethical integration of new technologies.
+- Cybersecurity threats powered by AI are becoming more sophisticated, requiring comprehensive defense strategies.
+- Companies must embrace change while managing risks and ethical considerations.
+
+ADDITIONAL INFORMATION:
+- The article mentions Ordnance Survey (OS) is the national mapping agency for Great Britain.
+- The author, Duncan MacRae, is an award-winning editor with over 20 years of experience in journalism.
+- The article includes links to resources on AI and Big Data Expo and other AI-related events.
+
+--- END OF EXAMPLE ---

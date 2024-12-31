@@ -170,6 +170,4 @@ A Stats collector which does nothing but is very efficient (because it does noth
 
 Close
 
-Convert the raw markdown into a clear, human-readable text format. Ensure to use bullet points for lists or key points, while keeping all headings, sub-headings, and important content. Remove unnecessary formatting and metadata. The output should preserve the key structure, details, and important points without summarizing, while making it easy to read and follow.
-
 
