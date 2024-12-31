@@ -1,0 +1,48 @@
+Stats Collection
+Scrapy provides a convenient facility for collecting stats in the form of key/values, where values are often counters. This feature is called the Stats Collector and can be accessed through the stats attribute of the Crawler API.
+
+Key Points
+The Stats Collector is always available, and you can import it in your module and use its API, even if stats collection is disabled.
+If stats collection is disabled, the API will still function, but it won’t collect any stats.
+The Stats Collector is efficient when enabled and almost unnoticeable when disabled.
+The stats table is automatically opened when the spider starts and closed when the spider ends.
+Common Stats Collector Uses
+Access the Stats Collector via the stats attribute:
+
+Set stat value:
+stats.set_value("hostname", socket.gethostname())
+
+Increment stat value:
+stats.inc_value("custom_count")
+
+Set stat value only if greater than the previous value:
+stats.max_value("max_items_scraped", value)
+
+Set stat value only if lower than the previous value:
+stats.min_value("min_free_memory_percent", value)
+
+Get stat value:
+stats.get_value("custom_count") returns 1
+
+Get all stats:
+stats.get_stats() might return something like:
+{'custom_count': 1, 'start_time': datetime.datetime(2009, 7, 14, 21, 47, 28, 977139)}
+
+Available Stats Collectors
+Scrapy offers different types of Stats Collectors:
+
+1. MemoryStatsCollector
+This is the default Stats Collector used in Scrapy. It keeps the stats of the last scraping run for each spider in memory. These stats can be accessed via the spider_stats attribute, which is a dictionary keyed by spider domain name.
+
+spider_stats: A dictionary of stats for each spider, keyed by the spider name.
+2. DummyStatsCollector
+This collector does nothing but is very efficient, as it doesn’t collect any stats. It can be used to disable stats collection for performance improvement. However, the performance penalty of stats collection is usually marginal compared to other tasks in Scrapy.
+
+Conclusion
+The Stats Collector is a powerful tool in Scrapy, allowing you to track various statistics of your spider's performance. It is flexible and efficient, providing a simple API for integration into your projects.
+
+
+
+
+
+
