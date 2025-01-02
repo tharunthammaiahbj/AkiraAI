@@ -1,0 +1,65 @@
+TITLE: Deprecations and Breaking Changes | LangChain Documentation  
+
+INTRODUCTION:  
+
+This document outlines the **deprecations** and **removals** in the `langchain` and `langchain-core` packages, focusing on changes that may affect backward compatibility. It does not cover new features or enhancements. For a summary of new features, refer to the [overview page](/docs/versions/v0_2/overview/).  
+
+BREAKING CHANGES:  
+
+- LangChain has introduced several breaking changes starting from release **0.2.0**.  
+- Users must now explicitly specify integrations like **chat models**, **LLMs**, **embedding models**, and **vector stores**.  
+- Default instantiation of these components is no longer supported.  
+
+FUNCTIONS AND CLASSES REQUIRING EXPLICIT LLMS:  
+
+Certain classes and functions now require explicit instantiation of LLMs to work effectively. These include:  
+
+- Classes:  
+  - `langchain.agents.agent_toolkits.vectorstore.toolkit.VectorStoreToolkit`  
+  - `langchain.agents.agent_toolkits.vectorstore.toolkit.VectorStoreRouterToolkit`  
+  - `langchain.chains.openai_functions.get_openapi_chain`  
+  - `langchain.chains.router.MultiRetrievalQAChain.from_retrievers`  
+  - `langchain.indexes.VectorStoreIndexWrapper.query`  
+  - `langchain.indexes.VectorStoreIndexWrapper.query_with_sources`  
+  - `langchain.indexes.VectorStoreIndexWrapper.aquery_with_sources`  
+  - `langchain.chains.flare.FlareChain`  
+
+LOADING & ACTIVATING COMPONENTS:  
+
+- Components must be explicitly loaded and activated in the project setup.  
+- These integrations are configured through LangChain settings files or programmatically within the codebase.  
+
+ENABLING/DISABLING INTEGRATIONS:  
+
+- To Enable: Specify the desired integration explicitly and configure its properties.  
+- To Disable: Remove the component or leave its configuration blank.  
+
+WRITING CUSTOM COMPONENTS:  
+
+Developers can create custom components by subclassing existing LangChain modules and overriding methods to customize functionality.  
+
+SAMPLE CUSTOM CLASS:  
+
+Below is a sample custom class for integrating a new vector store into LangChain.  
+
+Code Example:  
+
+```python  
+from langchain.vectorstores.base import VectorStore  
+
+class CustomVectorStore(VectorStore):  
+    def __init__(self, data):  
+        self.data = data  
+
+    def search(self, query, top_k=10):  
+        # Custom search logic  
+        return sorted(self.data, key=lambda x: self._similarity(query, x))[:top_k]  
+
+    def _similarity(self, query, item):  
+        # Compute similarity score  
+        return len(set(query.split()) & set(item.split()))  
+```
+
+CONCLUSION:
+
+The Deprecations and Breaking Changes in LangChain emphasize a shift towards a more modular and explicit configuration approach. By requiring users to explicitly specify integrations and configurations, LangChain aims to enhance flexibility, control, and customization. This ensures that developers can fine-tune their implementations to suit specific needs, fostering robust and scalable solutions. For continued seamless integration, it's essential to adapt to these changes and explore LangChain's updated documentation for guidance.

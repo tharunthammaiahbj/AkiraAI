@@ -1,0 +1,55 @@
+TITLE: Initial Setup - Anthropic | Anthropic Documentation
+
+INTRODUCTION:
+The initial setup guide for using the Anthropic API and Claude to develop applications. This guide covers the prerequisites, setting up the environment, and calling the API to interact with Claude for various tasks such as text generation and system prompts.
+
+KEY FEATURES:
+- API Access: Requires an Anthropic Console account and an API key to interact with the API.
+- SDK Support: Available for Python (3.7+) and TypeScript (4.5+).
+- Workbench: A web-based interface to test and develop queries with Claude before integration.
+- System Prompts: Allows customization of Claude’s responses, controlling tone and format.
+
+SETUP STEPS:
+
+1. Prerequisites:
+   - Create an Anthropic Console account.
+   - Obtain an API key from the console.
+   - Install Python 3.7+ or TypeScript 4.5+.
+
+2. Start with the Workbench:
+   - Log into the Anthropic Console and use the Workbench to ask questions or give prompts to Claude.
+   - Example: Asking “Why is the ocean salty?” can be answered by Claude directly or customized using system prompts.
+
+3. Install the SDK:
+   - Create a virtual environment in your project directory.
+   - Install the Anthropic Python SDK using `pip install anthropic`.
+
+4. Set Your API Key:
+   - Set the API key as an environment variable for authentication:
+     - For macOS/Linux: `export ANTHROPIC_API_KEY='your-api-key'`
+     - For Windows: `set ANTHROPIC_API_KEY='your-api-key'`.
+
+5. Call the API:
+   - Use the `messages/create` endpoint to interact with Claude, passing user messages and system instructions to tailor responses.
+
+COMMON USE CASES:
+- Text Generation: Generate customized text outputs from Claude using prompts and system instructions.
+- Customizing Responses: Modify the style and format of Claude’s responses by using system prompts to control the tone, such as asking Claude to respond poetically.
+
+EXAMPLE CODE:
+
+```python
+import anthropic
+client = anthropic.Anthropic()
+message = client.messages.create(
+    model="claude-3-5-sonnet-20241022", 
+    max_tokens=1000, 
+    temperature=0, 
+    system="You are a world-class poet. Respond only with short poems.", 
+    messages=[{"role": "user", "content": "Why is the ocean salty?"}]
+)
+print(message.content)
+```
+
+CONCLUSION:
+This guide provides the foundation for building applications using the Anthropic API and Claude. Start by exploring the Workbench for interactive testing and later move to code integration with the provided SDK. By customizing prompts and responses, you can tailor Claude’s behavior to meet specific application needs.
