@@ -66,4 +66,3 @@ Let Us Help You
 
 © 1996-2024, Amazon.com, Inc. or its affiliates![](//fls-eu.amazon.in/1/batch/1/OP/A21TJRUUN4KGV:257-9513163-9565459:T4Q77PK2Z94QAR8JMTDS$uedata=s:%2Frd%2Fuedata%3Fnoscript%26id%3DT4Q77PK2Z94QAR8JMTDS:0)
 
-Convert the raw markdown into a clear, human-readable text format. Ensure to use bullet points for lists or key points, while keeping all headings, sub-headings, and important content. Remove unnecessary formatting and metadata. The output should preserve the key structure, details, and important points without summarizing, while making it easy to read and follow.
