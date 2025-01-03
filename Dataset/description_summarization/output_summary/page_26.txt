@@ -1,0 +1,80 @@
+TITLE: Command Line Tool — Scrapy 2.12.0 Documentation
+
+INTRODUCTION:
+The Scrapy Command-Line Tool is a versatile interface for managing Scrapy projects, creating spiders, and controlling the web crawling workflow. It is accessed using the scrapy command, which supports multiple commands tailored for various tasks like configuration, project management, and spider execution. This tool allows developers to efficiently manage and monitor their scraping activities with a robust and streamlined command-line interface.
+
+CONFIGURATION:
+Scrapy’s configuration can be customized through files or environment variables:
+
+Configuration Files:
+
+- System-Wide: /etc/scrapy.cfg or c:\scrapy\scrapy.cfg.
+- User-Wide: ~/.config/scrapy.cfg and ~/.scrapy.cfg.
+- Project-Specific: scrapy.cfg in the project root directory.
+
+Environment Variables:
+
+- SCRAPY_SETTINGS_MODULE: Specifies the settings module to use.
+- SCRAPY_PROJECT: Defines the active project.
+- SCRAPY_PYTHON_SHELL: Configures the shell used for debugging.
+
+PROJECT STRUCTURE:
+A typical Scrapy project consists of the following components:
+
+```python
+scrapy.cfg  
+myproject/  
+    __init__.py  
+    items.py  
+    middlewares.py  
+    pipelines.py  
+    settings.py  
+    spiders/  
+        __init__.py  
+        spider1.py  
+        spider2.py  
+ ```
+
+Each component has a specific role, such as defining items, customizing middleware, or implementing spiders for web crawling.
+
+COMMON COMMANDS:
+
+Global Commands:
+These commands can be used both inside and outside a Scrapy project:
+
+- startproject: Creates a new Scrapy project.
+- genspider: Generates a new spider template.
+- settings: Displays project settings.
+- runspider: Runs a single spider without creating a project.
+- shell: Opens an interactive shell for scraping testing.
+- fetch: Fetches a URL using Scrapy.
+- view: Opens a downloaded webpage in the browser.
+- version: Displays the Scrapy version.
+
+Project-Only Commands:
+These commands work within a Scrapy project:
+
+- crawl: Starts the crawling process.
+- check: Validates the project setup.
+- list: Lists all available spiders.
+- edit: Opens a spider for editing.
+- parse: Parses a URL using the chosen spider.
+- bench: Runs a benchmarking test.
+
+USAGE EXAMPLES:
+
+Running a Spider:
+To run a spider, use:
+
+scrapy crawl spider_name
+Fetching a URL:
+To fetch a webpage:
+
+scrapy fetch http://example.com
+Viewing a Webpage:
+To view a downloaded page in the browser:
+
+scrapy view http://example.com
+
+CONCLUSION:
+The Scrapy Command-Line Tool is a cornerstone for effectively managing scraping tasks. Its extensive suite of commands provides developers with the ability to create, test, and run spiders while maintaining flexibility and control. By mastering this tool, developers can streamline their workflows and optimize the web scraping process with ease.
