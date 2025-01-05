@@ -1,3 +1,5 @@
+Summarize the key points from raw Wikipedia markdown in a clear, concise, and accurate manner. Focus on extracting essential facts, main ideas, and context, omitting unnecessary or redundant details. Adapt to different markdown structures, maintaining clarity and relevance while ensuring the summary remains comprehensive and coherent.
+
 Eva Joly - Wikipedia[Jump to content](#bodyContent)Main menuMain menumove to sidebarhide Navigation 
 
 * [Main page](/wiki/Main_Page)

@@ -1,3 +1,5 @@
+Summarize the key information from raw Wikipedia markdown into a concise and coherent format. Focus on capturing the most important facts, context, and key points, while omitting minor details or repetitive content. Adapt to various markdown styles, ensuring the summary is clear, structured, and faithful to the original text. 
+
 Alan Hinkes - Wikipedia[Jump to content](#bodyContent)Main menuMain menumove to sidebarhide Navigation 
 
 * [Main page](/wiki/Main_Page)

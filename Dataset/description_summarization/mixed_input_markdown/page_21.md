@@ -1,3 +1,5 @@
+Summarize the raw documentation markdown by condensing the key information, including important concepts, steps, and explanations. Ensure the summary is precise, clear, and relevant, adapting to various markdown formats while excluding redundant or unnecessary details.
+
 Initial setup - Anthropic[Anthropic home page![](https://mintlify.s3.us-west-1.amazonaws.com/anthropic/logo/light.svg)![](https://mintlify.s3.us-west-1.amazonaws.com/anthropic/logo/dark.svg)](/)EnglishSearch...Ctrl K
 
 * [Go to claude.ai](https://claude.ai/)

@@ -1,3 +1,5 @@
+Generate a concise and clear summary of the raw tech documentation markdown. Focus on key elements like core concepts, instructions, and essential workflows while ignoring extraneous or repetitive details. Ensure the summary is coherent, relevant, and adaptable to various markdown formats.
+
 Stats Collection — Scrapy 2.12.0 documentation [Scrapy](../index.html)  2.12 
 
 First steps

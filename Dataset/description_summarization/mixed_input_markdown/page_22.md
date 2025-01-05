@@ -1,3 +1,5 @@
+Summarize the raw Wikipedia markdown by extracting the most important facts, key points, and overall context. Focus on delivering a concise, accurate, and clear summary while adapting to different markdown structures. Exclude unnecessary or redundant details to ensure the summary remains focused and relevant.
+
 Bowers School (Clinton, Massachusetts) - Wikipedia[Jump to content](#bodyContent)Main menuMain menumove to sidebarhide Navigation 
 
 * [Main page](/wiki/Main_Page)

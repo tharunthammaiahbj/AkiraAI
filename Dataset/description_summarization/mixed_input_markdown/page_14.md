@@ -1,3 +1,5 @@
+ Summarize the main ideas and critical details from the raw news markdown. Focus on capturing the key facts, context, and any significant developments while omitting irrelevant or repetitive content. Ensure the summary is clear, concise, and adaptable to varying markdown structures.
+
  South Korea plane crash LIVE Updates: South Korea’s acting leader orders inspection of airline systems after 179 killed on December 29 - The Hindu ![](https://sb.scorecardresearch.com/p?c1=2&c2=11398210&cs_ucfr=1&cv=4.4.0&cj=1) />
 
 December 30, 2024[e-Paper](https://epaper.thehindu.com/reader?utm_source=Hindu&utm_medium=Menu&utm_campaign=Header&_gl=1*1u4uvwa*_gcl_au*NDk4ODM2Nzc2LjE3MjUwNzc4OTIuNTIxNjMwNzI4LjE3MjU0NDM0NDkuMTcyNTQ0MzQ0OQ..)

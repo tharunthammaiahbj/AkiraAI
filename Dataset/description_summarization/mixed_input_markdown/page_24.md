@@ -1,3 +1,5 @@
+Extract relevant product details from the raw markdown, including product name, description, price, features, availability, shipping information, and any other key attributes like specifications or sizes. Adapt to varying markdown structures, ensuring that all important information is captured in a structured and accurate format.
+
 Camera Replacement Parts & Tools | eBay[Skip to main content](#mainContent)
 
 | [eBay Home](https://www.ebay.com/) | Shop by categoryShop by category | | Enter your search keyword | All CategoriesAntiquesArtBabyBooksBusiness & IndustrialCameras & PhotoCell Phones & AccessoriesClothing, Shoes & AccessoriesCoins & Paper MoneyCollectiblesComputers/Tablets & NetworkingConsumer ElectronicsCraftsDolls & BearsDVDs & MovieseBay MotorsEntertainment MemorabiliaGift Cards & CouponsHealth & BeautyHome & GardenJewelry & WatchesMusicMusical Instruments & GearPet SuppliesPottery & GlassReal EstateSpecialty ServicesSporting GoodsSports Mem, Cards & Fan ShopStampsTickets & ExperiencesToys & HobbiesTravelVideo Games & ConsolesEverything Else | | --- | --- | |  | [Advanced](https://www.ebay.com/sch/ebayadvsearch) |  |

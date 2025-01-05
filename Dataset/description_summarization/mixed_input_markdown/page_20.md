@@ -1,3 +1,5 @@
+Summarize the raw markdown text into a concise and coherent format. Focus on extracting the main ideas, key details, and overall context while omitting unnecessary or repetitive information. Adapt to varying markdown styles to ensure the summary remains clear, accurate, and relevant.
+
 Sales analytics - Business Central | Microsoft Learn[Skip to main content](#main)
 
 Microsoft Learn Challenge

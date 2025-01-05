@@ -1,3 +1,5 @@
+Summarize the raw documentation markdown by identifying and condensing essential concepts, instructions, and processes. Ensure the summary is clear, precise, and relevant, adapting to varying markdown structures. Omit redundant or unnecessary details to maintain focus and clarity.
+
 Command line tool — Scrapy 2.12.0 documentation [Scrapy](../index.html)  2.12 
 
 First steps

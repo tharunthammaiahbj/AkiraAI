@@ -1,3 +1,5 @@
+Extract all relevant product information from raw markdown into a structured format. Adapt to different markdown styles, capturing key details like name, description, price, features, and availability accurately.
+
 Vintage Manufacture Diecast Aircrafts & Spacecrafts | eBay[Skip to main content](#mainContent)
 
 | [eBay Home](https://www.ebay.com/) | Shop by categoryShop by category | | Enter your search keyword | All CategoriesAntiquesArtBabyBooksBusiness & IndustrialCameras & PhotoCell Phones & AccessoriesClothing, Shoes & AccessoriesCoins & Paper MoneyCollectiblesComputers/Tablets & NetworkingConsumer ElectronicsCraftsDolls & BearsDVDs & MovieseBay MotorsEntertainment MemorabiliaGift Cards & CouponsHealth & BeautyHome & GardenJewelry & WatchesMusicMusical Instruments & GearPet SuppliesPottery & GlassReal EstateSpecialty ServicesSporting GoodsSports Mem, Cards & Fan ShopStampsTickets & ExperiencesToys & HobbiesTravelVideo Games & ConsolesEverything Else | | --- | --- | |  | [Advanced](https://www.ebay.com/sch/ebayadvsearch) |  |

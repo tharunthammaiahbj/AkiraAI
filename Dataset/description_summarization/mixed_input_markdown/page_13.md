@@ -1,3 +1,5 @@
+Extract all relevant product details from the raw markdown, including essential information like product name, description, price, features, availability, and other attributes such as specifications, colors, or sizes. Adapt to different markdown formats, ensuring the extracted information is structured, accurate, and focused on key details.
+
 Title: Alibaba.com
 
 URL Source: https://www.alibaba.com/trade/search?spm=a27aq.cp_1503.7961899180.2.1656544fW5EhWH&categoryId=201715704&SearchText=Office+Chairs&indexArea=product_en&fsb=y&productId=1600275799276

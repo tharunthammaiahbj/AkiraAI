@@ -1,3 +1,5 @@
+Condense the raw news markdown into a clear and concise summary. Highlight the key events, essential facts, and context while discarding unnecessary or redundant details. Adapt to diverse markdown formats, ensuring the summary is accurate, coherent, and focused on the most important aspects.
+
 MIT engineers grow “high-rise” 3D chips | MIT News | Massachusetts Institute of Technology[Skip to content ↓](#main)[Massachusetts Institute of Technology](http://web.mit.edu)[MIT Top Menu↓](#tle-nav--menu)
 
 * [Education](http://web.mit.edu/education)

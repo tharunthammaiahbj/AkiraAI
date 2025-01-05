@@ -1,3 +1,5 @@
+Extract and summarize the critical information from the raw documentation markdown. Focus on highlighting essential instructions, definitions, processes, or key points, while excluding any non-essential or overly detailed sections. Ensure the summary is comprehensive, easy to understand, and relevant to the core content, adapting to various markdown structures.
+
 Python Data Types - javatpoint[![](https://images.javatpoint.com/static/img/logo.png)](/)
 
 | |  | [×](javascript:void(0)) | | --- | --- | | search |  |

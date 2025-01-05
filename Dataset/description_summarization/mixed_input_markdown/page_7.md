@@ -1,3 +1,5 @@
+Summarize the key information from raw Wikipedia markdown into a concise and accurate format. Focus on capturing essential facts, context, and main points while omitting minor details or redundant content. Adapt to different markdown styles, ensuring clarity, coherence, and relevance in the summary.
+
 2014 AFC U-16 Championship - Wikipedia[Jump to content](#bodyContent)Main menuMain menumove to sidebarhide Navigation 
 
 * [Main page](/wiki/Main_Page)

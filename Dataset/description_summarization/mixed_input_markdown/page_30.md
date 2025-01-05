@@ -1,3 +1,5 @@
+Extract relevant product details from the raw markdown, including product name, description, price, features, availability, shipping information, specifications, and any other relevant attributes. Adapt to various markdown structures, ensuring the extracted information is complete, accurate, and structured.
+
 Reliable & Fast Aliexpress India Cargo Shipping - Alibaba.comAll categoriesFeatured selections
 
 Trade AssuranceBuyer CentralHelp Center

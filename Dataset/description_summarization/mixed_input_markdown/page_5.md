@@ -1,3 +1,6 @@
+Summarize the main information from raw news markdown into a concise and clear format. Focus on capturing essential details and key points without unnecessary repetition, adapting to various markdown styles for accuracy and coherence.
+
+
 Startup’s autonomous drones precisely track warehouse inventories | MIT News | Massachusetts Institute of Technology[Skip to content ↓](#main)[Massachusetts Institute of Technology](http://web.mit.edu)[MIT Top Menu↓](#tle-nav--menu)
 
 * [Education](http://web.mit.edu/education)

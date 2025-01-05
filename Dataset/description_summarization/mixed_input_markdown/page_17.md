@@ -1,3 +1,5 @@
+Extract and summarize the essential information from the raw tech documentation markdown. Focus on key details such as instructions, explanations, workflows, and important concepts, ensuring clarity and relevance. Adapt to different markdown formats while maintaining a concise, well-structured, and informative summary.
+
 OOPs Concepts in Python - javatpoint[![](https://images.javatpoint.com/static/img/logo.png)](/)
 
 | |  | [×](javascript:void(0)) | | --- | --- | | search |  |

@@ -1,3 +1,5 @@
+Summarize the key concepts, instructions, and relevant details from the raw tech documentation markdown. Focus on delivering the most important information, such as key steps, explanations, and context, while omitting unnecessary or redundant content. Adapt to different markdown styles, ensuring the summary is clear, concise, and informative.
+
 Extensions — Scrapy 2.12.0 documentation [Scrapy](../index.html)  2.12 
 
 First steps

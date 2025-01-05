@@ -1,3 +1,5 @@
+Summarize the raw Wikipedia markdown by focusing on key facts, main ideas, and essential context. Ensure the summary is clear, concise, and accurate, omitting redundant or unnecessary details. Adapt to varying markdown structures while maintaining clarity and coherence.
+
 4th Philippine Legislature - Wikipedia[Jump to content](#bodyContent)Main menuMain menumove to sidebarhide Navigation 
 
 * [Main page](/wiki/Main_Page)

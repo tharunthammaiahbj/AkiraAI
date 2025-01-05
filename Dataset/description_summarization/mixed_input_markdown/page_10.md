@@ -1,3 +1,5 @@
+Summarize the key points of the raw news article markdown. Focus on extracting the most important information, including the main facts, context, and any relevant details, while omitting repetitive or unnecessary content. Adapt to different markdown formats, ensuring the summary remains clear, concise, and informative.
+
 At least 3 migrants die crossing English Channel : NPRAccessibility links
 
 * [Skip to main content](#mainContent)

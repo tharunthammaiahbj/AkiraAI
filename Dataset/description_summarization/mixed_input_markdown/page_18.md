@@ -1,3 +1,5 @@
+Summarize the raw tech documentation markdown by identifying and condensing the most important concepts, processes, and instructions. Ensure the summary is clear, concise, and relevant, adapting to various markdown styles while omitting unnecessary details.
+
 LlamaIndex - LlamaIndex [Skip to content](https://docs.llamaindex.ai/en/stable/#welcome-to-llamaindex) [![](https://docs.llamaindex.ai/en/stable/_static/assets/LlamaSquareBlack.svg)](https://docs.llamaindex.ai/en/stable/) LlamaIndex  LlamaIndex Search`K`
 
 * [Home](https://docs.llamaindex.ai/en/stable/)
