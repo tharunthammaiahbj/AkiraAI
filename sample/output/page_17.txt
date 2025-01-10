@@ -1,0 +1,134 @@
+TITLE:OOPs Concepts in Python - javatpoint  
+
+INTRODUCTION: 
+
+Python is an object-oriented language that uses objects and classes to solve problems. This approach emphasizes writing reusable code and simulating real-world entities.  
+
+CLASS:
+
+A class is a blueprint for creating objects. It defines attributes and methods.  
+
+Example:  
+
+```python
+class Employee:  
+    def __init__(self, name, age):  
+        self.name = name  
+        self.age = age  
+```  
+
+OBJECT:  
+
+An object is an instance of a class. It represents a specific entity with states and behaviors.  
+
+Example:  
+
+```python
+employee = Employee("John", 30)  
+print(employee.name, employee.age)  # Output: John 30  
+```  
+
+METHOD:
+
+A method is a function that is associated with an object. Methods are defined within a class and can manipulate or access the object's data.  
+
+Example: 
+
+```python
+class Employee:  
+    def __init__(self, name, age):  
+        self.name = name  
+        self.age = age  
+
+    def display(self):  
+        print(f"Name: {self.name}, Age: {self.age}")  
+
+employee = Employee("John", 30)  
+employee.display()  # Output: Name: John, Age: 30  
+```  
+
+INHERITANCE:
+Inheritance allows a class to derive properties from another class, promoting code reuse.  
+
+Example:  
+```python
+class Parent:  
+    def show(self):  
+        print("This is the parent class.")  
+
+class Child(Parent):  
+    pass  
+
+child = Child()  
+child.show()  # Output: This is the parent class.  
+```  
+
+POLYMORPHISM:  
+Polymorphism means that the same operation or method can behave differently for different classes or objects.  
+
+Example: 
+
+```python
+class Animal:  
+    def speak(self):  
+        print("Animal speaks.")  
+
+class Dog(Animal):  
+    def speak(self):  
+        print("Dog barks.")  
+
+class Cat(Animal):  
+    def speak(self):  
+        print("Cat meows.")  
+
+animals = [Dog(), Cat()]  
+for animal in animals:  
+    animal.speak()  
+# Output:  
+# Dog barks.  
+# Cat meows.  
+```  
+
+ENCAPSULATION: 
+
+Encapsulation is the concept of wrapping data and methods together, restricting direct access to some of an object’s components.  
+
+Example:
+  
+```python
+class Employee:  
+    def __init__(self):  
+        self.__salary = 5000  # Private variable  
+
+    def get_salary(self):  
+        return self.__salary  
+
+employee = Employee()  
+print(employee.get_salary())  # Output: 5000  
+```  
+
+DATA ABSTRACTION:  
+Abstraction is the process of hiding the internal implementation and only exposing the necessary functionalities.  
+
+Example:
+
+```python
+from abc import ABC, abstractmethod  
+
+class Vehicle(ABC):  
+    @abstractmethod  
+    def start(self):  
+        pass  
+
+class Car(Vehicle):  
+    def start(self):  
+        print("Car starts with a key.")  
+
+car = Car()  
+car.start()  # Output: Car starts with a key.  
+```  
+
+CONCLUSION: 
+
+Python's object-oriented principles, such as classes, objects, inheritance, and encapsulation, provide a powerful framework for designing modular, reusable, and maintainable code.  
+ 

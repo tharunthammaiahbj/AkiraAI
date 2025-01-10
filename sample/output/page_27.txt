@@ -1,0 +1,52 @@
+
+TITLE: API | LANGFLOW DOCUMENTATION
+
+OVERVIEW
+This document provides detailed guidance on using Langflow's API and associated features. It covers topics like cURL commands, Python integration, embedding options for HTML, React, Angular, and configuration of the Chat Widget.
+
+API
+The API section offers templates for integrating your Langflow flow into external applications. These templates include cURL commands, Python scripts, and details about flow configuration.
+
+CURL
+The cURL section demonstrates how to post a query to your flow. Adjust the input_value to change the input message. Run the provided code snippet to interact with the API.
+
+PYTHON API
+The Python API section provides sample scripts to interact with your flow using the Python HTTP requests library.
+
+PYTHON CODE
+This section contains examples for handling .json files of your flow using the Langflow runtime.
+
+TWEAKS
+The Tweaks section explains how to adjust flow parameters. Modifications in the Tweaks section apply globally across API calls.
+
+SENDING IMAGE FILES TO THE API
+You can send image files to the Langflow API for AI analysis. The default file size limit is one hundred megabytes, configurable via the LANGFLOW_MAX_FILE_SIZE_UPLOAD environment variable.
+
+POST the image file to the v1/files/upload/<YOUR-FLOW-ID> endpoint.
+Use the provided file path in subsequent API calls to analyze the image.
+
+Example:
+
+curl -X POST "http://127.0.0.1:7860/api/v1/files/upload/a430cc57-06bb-4c11-be39-d3d4de68d2c4" \
+-H "Content-Type: multipart/form-data" \
+-F "file=@image-file.png"
+CHAT WIDGET
+The Chat Widget allows embedding Langflow functionality into web applications.
+
+EMBED YOUR FLOW INTO HTML
+Insert the widget code inside the <body> tag of an HTML file to embed it seamlessly.
+
+EMBED YOUR FLOW WITH REACT
+Add the widget script to your React project's index.html and declare it within your component files.
+
+EMBED YOUR FLOW WITH ANGULAR
+Integrate the widget by adding the script in the Angular index.html file. Use CUSTOM_ELEMENTS_SCHEMA to enable compatibility.
+
+CHAT WIDGET CONFIGURATION
+Use the widget API for customizations:
+
+Configure chat inputs, outputs, and window appearance.
+Define key settings such as flow ID, host URL, and placeholder messages.
+
+CONCLUSION
+Langflow's API and tools are versatile and adaptable for integrating conversational AI into various platforms. The provided documentation ensures a smooth implementation process for developers.

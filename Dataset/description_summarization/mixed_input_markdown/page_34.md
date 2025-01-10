@@ -172,54 +172,6 @@ New Dog Essentials
     
     Shipping, arrives in 2 days
     
-*   [### Pedigree Puppy Growth & Protection Dry Dog Food Chicken & Vegetable Flavor 14 Lb Bag](https://www.walmart.com/ip/Pedigree-Puppy-Growth-Protection-Dry-Dog-Food-Chicken-Vegetable-Flavor-14-Lb-Bag/839236282?athcpid=839236282&athpgid=AthenaContentPage_202072&athcgid=null&athznid=ItemCarousel_94881466-0482-4024-b314-923fb2f0cdc3_items&athieid=v0&athstid=CS020&athguid=rrwibpPSfe6VqNQCvZdpvq_i_3N7hmEK_Nl_&athancid=null&athena=true&athbdg=L1600)
-    
-    Best seller
-    
-    ![Image 190: Pedigree Puppy Growth & Protection Dry Dog Food Chicken & Vegetable Flavor 14 Lb Bag](https://i5.walmartimages.com/seo/Pedigree-Puppy-Growth-Protection-Dry-Dog-Food-Chicken-Vegetable-Flavor-14-Lb-Bag_c73db1d8-d1ee-406b-826f-9eebbbd86016.b9bdcc3263b4682e445482524304ea2d.jpeg?odnHeight=576&odnWidth=576&odnBg=FFFFFF)
-    
-    [Options](https://www.walmart.com/ip/Pedigree-Puppy-Growth-Protection-Dry-Dog-Food-Chicken-Vegetable-Flavor-14-Lb-Bag/839236282?athcpid=839236282&athpgid=AthenaContentPage_202072&athcgid=null&athznid=ItemCarousel_94881466-0482-4024-b314-923fb2f0cdc3_items&athieid=v0&athstid=CS020&athguid=rrwibpPSfe6VqNQCvZdpvq_i_3N7hmEK_Nl_&athancid=null&athena=true&athbdg=L1600)
-    
-    Available in additional 5 options
-    
-    More options from $6.82
-    
-    Pedigree Puppy Growth & Protection Dry Dog Food Chicken & Vegetable Flavor 14 Lb Bag
-    
-    4.7 out of 5 Stars. 717 reviews
-    
-    Save with
-    
-    ![Image 191: Walmart Plus](https://i5.walmartimages.com/dfw/63fd9f59-ac39/29c6759d-7f14-49fa-bd3a-b870eb4fb8fb/v1/wplus-icon-blue.svg)
-    
-    Pickup tomorrow
-    
-    Delivery tomorrow
-    
-*   [### MASBRILL Dog Harness and Leash Set, No Pull Vest Harness, Reflective Adjustable Soft Padded Pet Harness with Handle for Small to Large Dogs](https://www.walmart.com/ip/MASBRILL-Dog-Harness-and-Leash-Set-No-Pull-Vest-Harness-Reflective-Adjustable-Soft-Padded-Pet-Harness-with-Handle-for-Small-to-Large-Dogs/5287420931?athcpid=5287420931&athpgid=AthenaContentPage_202072&athcgid=null&athznid=ItemCarousel_94881466-0482-4024-b314-923fb2f0cdc3_items&athieid=v0&athstid=CS020&athguid=rrwibpPSfe6VqNQCvZdpvq_i_3N7hmEK_Nl_&athancid=null&athena=true&athbdg=L1600)
-    
-    Best seller
-    
-    ![Image 192: MASBRILL Dog Harness and Leash Set, No Pull Vest Harness, Reflective Adjustable Soft Padded Pet Harness with Handle for Small to Large Dogs](https://i5.walmartimages.com/seo/MASBRILL-Dog-Harness-and-Leash-Set-No-Pull-Vest-Harness-Reflective-Adjustable-Soft-Padded-Pet-Harness-with-Handle-for-Small-to-Large-Dogs_7d626d90-34f6-4ed2-b195-02df70028c75.5700ee02b28f77e49185ddaf9fb1527e.jpeg?odnHeight=576&odnWidth=576&odnBg=FFFFFF)
-    
-    [Options](https://www.walmart.com/ip/MASBRILL-Dog-Harness-and-Leash-Set-No-Pull-Vest-Harness-Reflective-Adjustable-Soft-Padded-Pet-Harness-with-Handle-for-Small-to-Large-Dogs/5287420931?athcpid=5287420931&athpgid=AthenaContentPage_202072&athcgid=null&athznid=ItemCarousel_94881466-0482-4024-b314-923fb2f0cdc3_items&athieid=v0&athstid=CS020&athguid=rrwibpPSfe6VqNQCvZdpvq_i_3N7hmEK_Nl_&athancid=null&athena=true&athbdg=L1600)
-    
-    Available in additional 20 options
-    
-    Options from $19.99 – $22.99
-    
-    Was $39.99
-    
-    MASBRILL Dog Harness and Leash Set, No Pull Vest Harness, Reflective Adjustable Soft Padded Pet Harness with Handle for Small to Large Dogs
-    
-    4.8 out of 5 Stars. 493 reviews
-    
-    Save with
-    
-    ![Image 193: Walmart Plus](https://i5.walmartimages.com/dfw/63fd9f59-ac39/29c6759d-7f14-49fa-bd3a-b870eb4fb8fb/v1/wplus-icon-blue.svg)
-    
-    Shipping, arrives in 2 days
-    
 *   [### EDX Medium Dog Crate with Divider Panel, 30 Inch Double Door Folding Metal Wire Dog Cage with Plastic Leak-Proof Pan Tray](https://www.walmart.com/ip/EDX-Medium-Dog-Crate-with-Divider-Panel-30-Inch-Double-Door-Folding-Metal-Wire-Dog-Cage-with-Plastic-Leak-Proof-Pan-Tray/5501350308?athcpid=5501350308&athpgid=AthenaContentPage_202072&athcgid=null&athznid=ItemCarousel_94881466-0482-4024-b314-923fb2f0cdc3_items&athieid=v0&athstid=CS020&athguid=rrwibpPSfe6VqNQCvZdpvq_i_3N7hmEK_Nl_&athancid=null&athena=true&athbdg=L1700)
     
     Reduced price

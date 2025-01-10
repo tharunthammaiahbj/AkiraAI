@@ -1,0 +1,70 @@
+TITLE: Stats Collection — Scrapy 2.12.0 Documentation
+
+INTRODUCTION: 
+
+Scrapy provides a flexible and efficient **Stats Collector** that allows users to collect and track key-value pairs of statistics during the scraping process. These statistics are often counters that provide valuable insights into the crawling and scraping activities. The Stats Collector can be accessed through the `stats` attribute of the **Crawler API** and offers both basic and extended features for managing and monitoring the scraping workflow.
+
+KEY FEATURES:
+- Stats Collector API: The core mechanism to collect stats within Scrapy. It allows for operations such as incrementing, setting, and querying statistics.
+- Efficiency: When enabled, the Stats Collector is highly efficient and minimally impacts performance. If disabled, the performance overhead is almost negligible.
+- Spider-Specific Stats: A stats table is created per open spider, ensuring that statistics are collected and maintained per spider session.
+  
+COMMON STATS COLLECTOR USE CASES:
+
+- Set stat value:
+  Example:
+
+  ```python
+  stats.set_value("hostname", socket.gethostname())
+  ```
+
+- Increment stat value:
+
+  Example:  
+  ```python
+  stats.inc_value("custom_count")
+  ```
+
+- Set stat value if greater than previous:
+
+  Example:
+  ```python
+  stats.max_value("max_items_scraped", value)
+  ```
+
+- Set stat value if lower than previous:
+
+  Example:
+  ```python
+  stats.min_value("min_free_memory_percent", value)
+  ```
+
+- Get stat value:
+
+  Example: 
+  ```python
+  stats.get_value("custom_count")  # Returns 1
+  ```
+
+- Get all stats:  
+
+  Example:
+  ```python
+  stats.get_stats()  # Returns a dictionary of all collected stats
+  ```
+
+AVAILABLE STATS COLLECTORS:
+
+- MemoryStatsCollector:  
+  The default Stats Collector in Scrapy. It stores stats in memory and maintains a dictionary of stats for each spider, accessible after the spider closes. It stores stats from the last scraping session for each spider in a dictionary.
+
+- DummyStatsCollector:  
+  A lightweight Stats Collector that does nothing but still integrates into the system. It is designed to improve performance by disabling stats collection when needed. This is useful when performance is critical, and the stats data is not required.
+
+CONFIGURATION:
+
+- The default Stats Collector is the `MemoryStatsCollector`, but users can switch to other collectors (such as `DummyStatsCollector`) by configuring the **STATS_CLASS** setting in Scrapy’s settings.
+
+CONCLUSION:
+
+Scrapy’s Stats Collector offers a powerful mechanism for tracking the performance and progress of scraping tasks. By enabling or disabling it as needed, developers can manage the balance between performance and data collection. Whether using the default memory-based stats collection or a dummy collector for efficiency, the framework provides flexible tools for integrating statistics into the scraping workflow.
