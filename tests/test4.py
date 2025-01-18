@@ -1,22 +1,25 @@
-import requests
+import asyncio
+from crawl4ai import AsyncWebCrawler
+from crawl4ai.async_configs import BrowserConfig, CrawlerRunConfig
 
-def scrape_jina_ai(url:str)->str:
-  response = requests.get("https://r.jina.ai/"+ url)
-  response.raise_for_status()
-  return response.text
+async def main():
+    browser_config = BrowserConfig()  # Default browser configuration
+    run_config = CrawlerRunConfig()   # Default crawl run configuration
 
-url_list = [
-    "https://www.airbnb.co.in/"
-]
+    async with AsyncWebCrawler(config=browser_config) as crawler:
+        result = await crawler.arun(
+            url="https://docs.scrapy.org/en/latest/topics/downloader-middleware.html",
+            config=run_config
+        )
+        
+        # Save raw HTML to a file
+        file_path = "/workspaces/AkiraAI/tests/sample_htmls/documentary3_html.html"
+        with open(file_path, "w", encoding="utf-8") as file:
+            file.write(result.html)  # Save raw HTML content
+        print(f"HTML content saved to {file_path}")
+        
+        # Print some outputs for verification
+        print(result.fit_markdown)  # Most relevant content in markdown
 
-for url in url_list:  
-
-  file_counter = 1
-  markdown_content = scrape_jina_ai(url=url)
-  with open(f"/workspaces/AkiraAI/Dataset/dataset_collection/raw_markdown/travel/airbnb/bnb_{file_counter}.md","w") as file:
-    file.write(markdown_content)
-    print("Saved the markdown")
-
-
-
-
+if __name__ == "__main__":
+    asyncio.run(main())

@@ -1,3 +1,6 @@
+with open("/workspaces/AkiraAI/Dataset/dataset_collection/raw_markdown/e-commerce/ebay/ebay_1.md", "r") as file:
+    markdown_content = file.read()
+
 import os
 import json
 from dotenv import load_dotenv
@@ -26,7 +29,7 @@ with open(json_key_file_path, 'r') as file:
 vertexai.init(location="us-central1", project=project_id)
 
 # Define the text prompt for text generation
-text_prompt = "Write a creative story about a young explorer discovering a hidden city in the jungle."
+text_prompt = f"Extract All the product Information like price, auction, shipping, name of the product, there are approximately 50 to 60 products from this markdown content in a structured manner : {markdown_content}"
 
 # Initialize the model for text generation
 model = GenerativeModel("gemini-1.5-flash-002")
