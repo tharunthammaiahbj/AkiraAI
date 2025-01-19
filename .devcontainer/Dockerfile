@@ -43,11 +43,11 @@ RUN curl -fsSL https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key a
     apt-get update
 
 # Install Google Chrome version 131.0.6778.85
-RUN apt-get install -y google-chrome-stable=131.0.6778.204-1  && \
+RUN apt-get install -y google-chrome-stable=132.0.6834.83-1  && \
     apt-mark hold google-chrome-stable  # Prevent auto-upgrades
 
 # Install ChromeDriver from the official Chrome for Testing repository
-RUN wget https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.204/linux64/chromedriver-linux64.zip \
+RUN wget https://storage.googleapis.com/chrome-for-testing-public/132.0.6834.83/linux64/chromedriver-linux64.zip \
     && unzip chromedriver-linux64.zip -d /usr/local/bin/ \
     && mv /usr/local/bin/chromedriver-linux64/chromedriver /usr/local/bin/ \
     && rm -r /usr/local/bin/chromedriver-linux64 chromedriver-linux64.zip \

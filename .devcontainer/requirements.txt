@@ -39,3 +39,5 @@ google-cloud                       # to access to all the google cloud services 
 google-cloud-aiplatform
 vertexai                           # to use vertex AI models for different purposes
 transformers>=4.47.1               # Tokenize and efficient use of input for LLMs
+sentence-transformers>=3.3.1       # for embedding models for vector transformation of Semantic Meaning
+torch>=2.5.1                       # Machine Learning Framework
