@@ -1,34 +1,28 @@
-import asyncio
-from crawl4ai.content_filter_strategy import PruningContentFilter
-from crawl4ai.markdown_generation_strategy import DefaultMarkdownGenerator
-from crawl4ai import AsyncWebCrawler, CacheMode, BrowserConfig, CrawlerRunConfig
+from akiraai.utils.markdown_result_gen import MarkdownGenerationResult
+from akiraai.html2text import CustomHTML2Text
+from akiraai.utils.markdown_generation_strategy import DefaultMarkdownGenerator  # Adjust this import path to where your DefaultMarkdownGenerator is
 
-async def clean_content():
-    async with AsyncWebCrawler(verbose=True) as crawler:
-        config = CrawlerRunConfig(
-            cache_mode=CacheMode.ENABLED,
-            excluded_tags=['nav', 'footer', 'aside'],
-            remove_overlay_elements=True,
-            markdown_generator=DefaultMarkdownGenerator(
-                content_filter=PruningContentFilter(threshold=0.48, threshold_type="fixed", min_word_threshold=0),
-                options={
-                    "ignore_links": False
-                }
-            ),
-        )
-        result = await crawler.arun(
-            url="https://www.ebay.com/sch/i.html?_nkw=Louis+Vuitton+Bags+%26+Handbags+for+Women+&_sacat=0&_from=R40&_trksid=p4439441.m570.l1313",
-            config=config,
-        )
-        full_markdown_length = len(result.markdown_v2.raw_markdown)
-        fit_markdown_length = len(result.markdown_v2.fit_markdown)
-        print(f"Full Markdown Length: {full_markdown_length}")
-        print(f"Fit Markdown Length: {fit_markdown_length}")
-        
-        # Save the fit markdown to a file
-        with open("/workspaces/AkiraAI/clean_markdown.md", "w") as file:
-            file.write(result.markdown_v2.fit_markdown)
-        print("Fit markdown has been saved to /workspaces/AkiraAI/clean_markdown.md")
+# Path to your HTML file
+html_file_path = "/workspaces/AkiraAI/tests/sample_htmls/amazon_html1.html"
 
-# Run the asynchronous function
-asyncio.run(clean_content())
+# Read the HTML content
+with open(html_file_path, "r", encoding="utf-8") as f:
+    cleaned_html = f.read()
+
+# Initialize the markdown generator
+markdown_generator = DefaultMarkdownGenerator()
+
+# Generate the markdown (no content filtering)
+markdown_result: MarkdownGenerationResult = markdown_generator.generate_markdown(cleaned_html, citations=True)
+
+# Print the raw markdown result
+print("Raw Markdown:\n", markdown_result.raw_markdown)
+
+with open("/workspaces/AkiraAI/tests/sample_markdowns/cleaned_amazon1_md.md", "w", encoding="utf-8") as f:
+    f.write(markdown_result.raw_markdown)
+
+# Print markdown with citations (if citations are enabled)
+print("\nMarkdown with Citations:\n", markdown_result.markdown_with_citations)
+
+# Print references markdown (if citations are enabled)
+print("\nReferences Markdown:\n", markdown_result.references_markdown)

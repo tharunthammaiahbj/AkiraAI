@@ -10,9 +10,8 @@ free-proxy>=1.1.1                  # Free proxy access
 async_timeout>=4.0.3               # Timeout handling for async scraping
 
 # HTML Processing
-html2text>=2024.2.26               # Convert HTML to text
 minify-html>=0.15.0                # Minify HTML content
-markdownify>=0.14.1                # HTML to markdown conversion
+pydantic>=2.10
 
 # Data Handling and Parsing
 pandas>=2.2.2                      # Data manipulation and analysis
