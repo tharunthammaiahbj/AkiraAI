@@ -1,6 +1,6 @@
 import time
 from typing import Dict
-from akiraai.utils.cleanitup_html import sanitize_html, sanitize_input_encode
+from akiraai.utils.html_utils import sanitize_html, sanitize_input_encode
 from akiraai.utils.markdown_generation_strategy import DefaultMarkdownGenerator
 
 def process_html_to_markdown(html: str, verbose: bool = False) -> Dict:

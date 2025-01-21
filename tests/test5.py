@@ -1,4 +1,4 @@
-from akiraai.utils.markdown_result_gen import MarkdownGenerationResult
+from akiraai.utils.markdown_generation_result import MarkdownGenerationResult
 from akiraai.html2text import CustomHTML2Text
 from akiraai.utils.markdown_generation_strategy import DefaultMarkdownGenerator  # Adjust this import path to where your DefaultMarkdownGenerator is
 

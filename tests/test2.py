@@ -1,4 +1,4 @@
-from akiraai.data_preprocessing.clean_up_html import cleanup_html, minify_html, reduce_html
+from akiraai.utils.clean_up_html import cleanup_html, minify_html, reduce_html
 
 
 # Read the raw HTML content from a file

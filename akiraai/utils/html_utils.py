@@ -1,6 +1,7 @@
 import re
 from bs4 import BeautifulSoup, Comment, element, Tag, NavigableString
 from akiraai.html2text import CustomHTML2Text, html2text
+from urllib.parse import urlparse
 
 
 class InvalidCSSSelectorError(Exception):
@@ -11,7 +12,7 @@ MIN_WORD_THRESHOLD = 1
 def sanitize_html(html: str) -> str:
     """
     Sanitize an HTML string by escaping quotes and removing unwanted characters.
-
+s
     Args:
         html (str): The HTML string to sanitize.
 
@@ -459,3 +460,90 @@ def fast_format_html(html_string):
                 formatted.append(indent_str * indent + content)
     
     return '\n'.join(formatted)
+
+
+def normalize_url(href, base_url):
+    """Normalize URLs to ensure consistent format"""
+    from urllib.parse import urljoin, urlparse
+
+    # Parse base URL to get components
+    parsed_base = urlparse(base_url)
+    if not parsed_base.scheme or not parsed_base.netloc:
+        raise ValueError(f"Invalid base URL format: {base_url}")
+
+    # Use urljoin to handle all cases
+    normalized = urljoin(base_url, href.strip())
+    return normalized
+
+def is_external_url(url: str, base_domain: str) -> bool:
+    """
+    Extract the base domain from a given URL, handling common edge cases.
+
+    How it works:
+    1. Parses the URL to extract the domain.
+    2. Removes the port number and 'www' prefix.
+    3. Handles special domains (e.g., 'co.uk') to extract the correct base.
+
+    Args:
+        url (str): The URL to extract the base domain from.
+
+    Returns:
+        str: The extracted base domain or an empty string if parsing fails.
+    """
+    special = {'mailto:', 'tel:', 'ftp:', 'file:', 'data:', 'javascript:'}
+    if any(url.lower().startswith(p) for p in special):
+        return True
+        
+    try:
+        parsed = urlparse(url)
+        if not parsed.netloc:  # Relative URL
+            return False
+            
+        # Strip 'www.' from both domains for comparison
+        url_domain = parsed.netloc.lower().replace('www.', '')
+        base = base_domain.lower().replace('www.', '')
+        
+        # Check if URL domain ends with base domain
+        return not url_domain.endswith(base)
+    except Exception:
+        return False
+
+
+def get_base_domain(url: str) -> str:
+    """
+    Extract the base domain from a given URL, handling common edge cases.
+
+    How it works:
+    1. Parses the URL to extract the domain.
+    2. Removes the port number and 'www' prefix.
+    3. Handles special domains (e.g., 'co.uk') to extract the correct base.
+
+    Args:
+        url (str): The URL to extract the base domain from.
+
+    Returns:
+        str: The extracted base domain or an empty string if parsing fails.
+    """
+    try:
+        # Get domain from URL
+        domain = urlparse(url).netloc.lower()
+        if not domain:
+            return ""
+            
+        # Remove port if present
+        domain = domain.split(':')[0]
+        
+        # Remove www
+        domain = re.sub(r'^www\.', '', domain)
+        
+        # Extract last two parts of domain (handles co.uk etc)
+        parts = domain.split('.')
+        if len(parts) > 2 and parts[-2] in {
+            'co', 'com', 'org', 'gov', 'edu', 'net', 
+            'mil', 'int', 'ac', 'ad', 'ae', 'af', 'ag'
+        }:
+            return '.'.join(parts[-3:])
+            
+        return '.'.join(parts[-2:])
+    except Exception:
+        return ""

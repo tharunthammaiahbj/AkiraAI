@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Optional, Dict, Any, Tuple
-from akiraai.utils.markdown_result_gen import MarkdownGenerationResult
+from akiraai.utils.markdown_generation_result import MarkdownGenerationResult
 from akiraai.html2text import CustomHTML2Text
 import re
 from urllib.parse import urljoin
