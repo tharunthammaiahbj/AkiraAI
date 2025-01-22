@@ -8,17 +8,17 @@ async def main():
 
     async with AsyncWebCrawler(config=browser_config) as crawler:
         result = await crawler.arun(
-            url="https://www.amazon.in/gp/bestsellers/luggage/ref=zg_bs_nav_luggage_0",
+            url="https://www.ebay.com/b/Womens-Clothing-Shoes-Accessories/260010/bn_7116391826",
             config=run_config
         )
         
         # Save raw HTML to a file
-        '''file_path = "/workspaces/AkiraAI/tests/sample_htmls/documentary3_html.html"
+        file_path = "/workspaces/AkiraAI/tests/sample_htmls/ebay1_html.html"
         with open(file_path, "w", encoding="utf-8") as file:
             file.write(result.html)  # Save raw HTML content
-        print(f"HTML content saved to {file_path}")'''
+        print(f"HTML content saved to {file_path}")
 
-        with open("/workspaces/AkiraAI/tests/sample_markdowns/cleaned_amazon1_md.md", "w", encoding="utf-8") as file:
+        with open("/workspaces/AkiraAI/tests/sample_markdowns/cleaned_ebay1_md.md", "w", encoding="utf-8") as file:
             file.write(result.markdown)  # Save raw HTML content
         #print(f"HTML content saved to {file_path}")
         
