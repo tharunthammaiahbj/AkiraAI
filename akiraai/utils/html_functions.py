@@ -5,7 +5,10 @@ from bs4 import element, NavigableString, Comment
 from bs4 import PageElement, Tag
 from typing import Dict, Any
 from akiraai.utils.html_utils import is_external_url, get_base_domain, normalize_url
+from akiraai.utils.logging import get_logger
 
+
+logger = get_logger(name="html_Processing_logger")
 
 OG_REGEX = re.compile(r'^og:')
 TWITTER_REGEX = re.compile(r'^twitter:')
@@ -42,7 +45,7 @@ def fetch_image_file_size(img, base_url):
     finally:
         return
     
-def flatten_nested_elements(self, node):
+def flatten_nested_elements(node):
         """
         Flatten nested elements in a HTML tree.
 
@@ -55,12 +58,12 @@ def flatten_nested_elements(self, node):
         if isinstance(node, NavigableString):
             return node
         if len(node.contents) == 1 and isinstance(node.contents[0], Tag) and node.contents[0].name == node.name:
-            return self.flatten_nested_elements(node.contents[0])
-        node.contents = [self.flatten_nested_elements(child) for child in node.contents]
+            return flatten_nested_elements(node.contents[0])
+        node.contents = [flatten_nested_elements(child) for child in node.contents]
         return node
 
     
-def find_closest_parent_with_useful_text(self, tag, **kwargs):
+def find_closest_parent_with_useful_text(tag, **kwargs):
         """
         Find the closest parent with useful text.
 
@@ -83,7 +86,7 @@ def find_closest_parent_with_useful_text(self, tag, **kwargs):
                     return text_content
         return None
 
-def remove_unwanted_attributes(self, element, important_attrs, keep_data_attributes=False):
+def remove_unwanted_attributes(element, important_attrs, keep_data_attributes=False):
         """
         Remove unwanted attributes from an HTML element.
 
@@ -108,7 +111,7 @@ def remove_unwanted_attributes(self, element, important_attrs, keep_data_attribu
             del element[attr]
 
 
-def process_image(self, img, url, index, total_images, **kwargs):
+def process_image(img, url, index, total_images, **kwargs):
         """
         Process an image element.
         
@@ -215,7 +218,7 @@ def process_image(self, img, url, index, total_images, **kwargs):
         image_description_min_word_threshold = kwargs.get('image_description_min_word_threshold', IMAGE_DESCRIPTION_MIN_WORD_THRESHOLD)
         base_info = {
             'alt': alt,
-            'desc': self.find_closest_parent_with_useful_text(img, **kwargs),
+            'desc': find_closest_parent_with_useful_text(img, **kwargs),
             'score': score,
             'type': 'image',
             'group_id': group_id, # Group ID for this set of variants
@@ -252,7 +255,7 @@ def process_image(self, img, url, index, total_images, **kwargs):
 
         return image_variants if image_variants else None
 
-def process_element(self, url, element: PageElement, **kwargs) -> Dict[str, Any]:        
+def process_element(url, element: PageElement, **kwargs) -> Dict[str, Any]:        
     """
     Process an HTML element.
         
@@ -288,7 +291,7 @@ def process_element(self, url, element: PageElement, **kwargs) -> Dict[str, Any]
     }
 
 
-def _process_element(self, url, element: PageElement,  media: Dict[str, Any], internal_links_dict: Dict[str, Any], external_links_dict: Dict[str, Any], **kwargs) -> bool:
+def _process_element(url, element: PageElement,  media: Dict[str, Any], internal_links_dict: Dict[str, Any], external_links_dict: Dict[str, Any], **kwargs) -> bool:
         """
         Process an HTML element.        
         """
@@ -437,7 +440,7 @@ def _process_element(self, url, element: PageElement,  media: Dict[str, Any], in
                     'src': element.get('src'),
                     'alt': element.get('alt'),
                     'type': element.name,
-                    'description': self.find_closest_parent_with_useful_text(element, **kwargs)
+                    'description':find_closest_parent_with_useful_text(element, **kwargs)
                 })
                 source_tags = element.find_all('source')
                 for source_tag in source_tags:
@@ -445,7 +448,7 @@ def _process_element(self, url, element: PageElement,  media: Dict[str, Any], in
                     'src': source_tag.get('src'),
                     'alt': element.get('alt'),
                     'type': element.name,
-                    'description': self.find_closest_parent_with_useful_text(element, **kwargs)
+                    'description': find_closest_parent_with_useful_text(element, **kwargs)
                 })
                 return True  # Always keep video and audio elements
 
@@ -454,21 +457,17 @@ def _process_element(self, url, element: PageElement,  media: Dict[str, Any], in
                     element.replace_with(element.get_text())
 
             try:
-                self.remove_unwanted_attributes(element, IMPORTANT_ATTRS, kwargs.get('keep_data_attributes', False))
+                remove_unwanted_attributes(element, IMPORTANT_ATTRS, kwargs.get('keep_data_attributes', False))
             except Exception as e:
                 # print('Error removing unwanted attributes:', str(e))
-                self._log('error',
-                    message="Error removing unwanted attributes: {error}",
-                    tag="SCRAPE",
-                    params={"error": str(e)}
-                )
+                logger.error(f"Error removing unwated attributes. Error: {e} ")
             # Process children
             for child in list(element.children):
                 if isinstance(child, NavigableString) and not isinstance(child, Comment):
                     if len(child.strip()) > 0:
                         keep_element = True
                 else:
-                    if self._process_element(url, child, media, internal_links_dict, external_links_dict, **kwargs):
+                    if _process_element(url, child, media, internal_links_dict, external_links_dict, **kwargs):
                         keep_element = True
                 
 
@@ -484,10 +483,6 @@ def _process_element(self, url, element: PageElement,  media: Dict[str, Any], in
             return keep_element
         except Exception as e:
             # print('Error processing element:', str(e))
-            self._log('error',
-                message="Error processing element: {error}",
-                tag="SCRAPE",
-                params={"error": str(e)}
-            )                
+            logger.error(f"Error Processing Elements: Error {e}")      
             return False
 

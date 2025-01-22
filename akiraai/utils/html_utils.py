@@ -12,7 +12,7 @@ MIN_WORD_THRESHOLD = 1
 def sanitize_html(html: str) -> str:
     """
     Sanitize an HTML string by escaping quotes and removing unwanted characters.
-s
+
     Args:
         html (str): The HTML string to sanitize.
 
