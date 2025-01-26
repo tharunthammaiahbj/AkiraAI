@@ -1,17 +1,32 @@
 from transformers import AutoTokenizer, AutoModel
 import torch
 
-def initialize_embedding_model():
+def initialize_model_pool(model_path, pool_size=2, tokenizer_options=None, model_options=None):
     """
-    Initializes the embedding model by loading the tokenizer and model from a local directory.
-    Returns the initialized tokenizer and model.
-    """
-    local_model_path = "/workspaces/AkiraAI/akiraai/models/minilm-v6-local"  # Replace with the actual path
-    tokenizer = AutoTokenizer.from_pretrained(local_model_path)
-    model = AutoModel.from_pretrained(local_model_path)
-    return tokenizer, model
+    Initialize a pool of models and tokenizers with optional configurations.
 
-def mean_pooling(self, model_output, attention_mask):
+    Args:
+        model_path (str): Path or name of the pretrained model.
+        pool_size (int): Number of model instances in the pool. Defaults to 4.
+        tokenizer_options (dict, optional): Additional options for initializing the tokenizer. Defaults to None.
+        model_options (dict, optional): Additional options for initializing the model. Defaults to None.
+
+    Returns:
+        list: A list containing (tokenizer, model) pairs.
+    """
+    tokenizer_options = tokenizer_options or {}
+    model_options = model_options or {}
+
+    pool = []
+    for _ in range(pool_size):
+        tokenizer = AutoTokenizer.from_pretrained(model_path, **tokenizer_options)
+        model = AutoModel.from_pretrained(model_path, **model_options)
+        pool.append((tokenizer, model))
+    
+    return pool
+
+
+def mean_pooling(model_output, attention_mask):
     """
     Perform mean pooling on the token embeddings based on the attention mask.
 
@@ -33,5 +48,10 @@ def mean_pooling(self, model_output, attention_mask):
 
     # Mean pooling
     return sum_embeddings / sum_mask
+
+
+
+
+
 
 

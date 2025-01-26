@@ -34,3 +34,4 @@ print(f"Processed {url} in {processing_time}ms")
 markdown_file_path = "/workspaces/AkiraAI/tests/sample_markdowns/example.md"
 with open(markdown_file_path, "w", encoding="utf-8") as md_file:
     md_file.write(markdown)
+
