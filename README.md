@@ -1,5 +1,5 @@
-###Akira.ai 🤖
-###Intelligent Web-to-Markdown ML Pipeline
+Akira.ai 🤖
+Intelligent Web-to-Markdown ML Pipeline
 
 Convert messy web HTML into clean, LLM-ready markdown using ML-powered processing and intelligent web scraping.
 
